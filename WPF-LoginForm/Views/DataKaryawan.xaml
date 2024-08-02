@@ -1,0 +1,353 @@
+﻿<UserControl x:Class="WPF_LoginForm.Views.DataKaryawan"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:customcontrols="clr-namespace:WPF_LoginForm.CustomControls"
+             xmlns:local="clr-namespace:WPF_LoginForm.Views" xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             mc:Ignorable="d" 
+             d:DesignHeight="950" d:DesignWidth="1500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="300"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="120"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Top"
+                        Grid.Column="0">
+                <fa:IconImage Icon="Search" Height="20" Width="20" Foreground="{StaticResource plainTextColor3}"/>
+
+                <TextBox Text="Search..."   
+                    FontSize="13"
+                         Height="24"
+                           Width="300"
+                           Background="Transparent"
+                             FontWeight="Medium"
+                             FontFamily="Montserrat"                            
+                             Foreground="{StaticResource plainTextColor3}"
+                             CaretBrush="{StaticResource plainTextColor3}"
+                             BorderBrush="{StaticResource plainTextColor3}"
+                             BorderThickness="0,0,0,1"                             
+                             VerticalContentAlignment="Center"
+                             Margin="5,5,0,0"
+                         Name="txtsearch"></TextBox>
+
+            </StackPanel>
+
+            <Button Grid.Column="1"
+                            Command="{Binding LoginCommand}"                            
+                            Content="Search"                            
+                            FontSize="12"
+                            FontFamily="Montserrat"
+                            Cursor="Hand"
+                            BorderThickness="0"
+                            Foreground="White"
+                    VerticalAlignment="Top">
+
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#773DFF"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Height="30"
+                                                    CornerRadius="15"
+                                                    Background="{TemplateBinding Background}">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                                                      HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#836EFB"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Vertical" Margin="20,10,0,0" HorizontalAlignment="Left">
+
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Nama"
+       Foreground="DarkGray"
+       FontSize="12"
+       FontWeight="Medium"
+       FontFamily="Montserrat"
+       Margin="0,0,10,0"
+       VerticalAlignment="Center"/>
+
+                    <TextBox x:Name="txtPengirim"
+     Text=""
+     FontSize="13"
+     FontWeight="Medium"
+     FontFamily="Montserrat"
+     Foreground="White"
+     CaretBrush="LightGray"
+     BorderBrush="DarkGray"
+     BorderThickness="0,0,0,2"
+     Height="30"
+     Width="495"         
+     VerticalContentAlignment="Center"
+     Margin="50,5,0,0"
+     Padding="20,0,0,0">
+
+                        <TextBox.Background>
+                            <ImageBrush ImageSource="/Images/user-icon.png"
+                Stretch="None"
+                AlignmentX="Left"/>
+                        </TextBox.Background>
+                    </TextBox>
+                </StackPanel>
+
+
+
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="NIK"
+       Foreground="DarkGray"
+       FontSize="12"
+       FontWeight="Medium"
+       FontFamily="Montserrat"
+       Margin="0,0,10,0"
+       VerticalAlignment="Center"/>
+
+                    <TextBox x:Name="txtSubjek"
+     Text=""
+     FontSize="13"
+     FontWeight="Medium"
+     FontFamily="Montserrat"
+     Foreground="White"
+     CaretBrush="LightGray"
+     BorderBrush="DarkGray"
+     BorderThickness="0,0,0,2"
+     Height="30"
+     Width="500"         
+     VerticalContentAlignment="Center"
+     Margin="60,5,0,0"
+     Padding="20,0,0,0">
+                        <TextBox.Background>
+                            <ImageBrush ImageSource="/Images/pen-2.png"
+                Stretch="None"
+                AlignmentX="Left" />
+                        </TextBox.Background>
+                    </TextBox>
+                </StackPanel>
+
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Akses"
+                   Foreground="DarkGray"
+                   FontSize="12"
+                   FontWeight="Medium"
+                   FontFamily="Montserrat"
+                   Margin="0,0,10,0"
+                   VerticalAlignment="Center"/>
+
+                    <!--<TextBox x:Name="txtPenerima"
+                 Text=""
+                 FontSize="13"
+                 FontWeight="Medium"
+                 FontFamily="Montserrat"
+                 Foreground="White"
+                 CaretBrush="LightGray"
+                 BorderBrush="DarkGray"
+                 BorderThickness="0,0,0,2"
+                 Height="30"
+                 Width="500"         
+                 VerticalContentAlignment="Center"
+                 Margin="-2,5,0,0"
+                 Padding="20,0,0,0">
+            <TextBox.Background>
+                <ImageBrush ImageSource="/Images/user-icon.png"
+    Stretch="None"
+    AlignmentX="Left"/>
+            </TextBox.Background>
+        </TextBox>-->
+                    <ComboBox x:Name="Penerima" 
+                  Style="{StaticResource ComboBoxFlatStyle}" VerticalContentAlignment="Center" Width="498" FontSize="12" Height="28" Margin="50,5,0,0" FontFamily="Montserrat" FontWeight="Medium"
+                  SelectedIndex="0">
+                        <ComboBoxItem>Akses Semua</ComboBoxItem>
+                        <ComboBoxItem>Akses Admin</ComboBoxItem>
+
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Tanggal Lahir"
+                               Foreground="DarkGray"
+                               FontSize="12"
+                               FontWeight="Medium"
+                               FontFamily="Montserrat"
+                               Margin="0,0,10,0"
+                               VerticalAlignment="Center"/>
+
+
+
+                    <TextBox x:Name="txtTanggal"
+                             Text=""
+                             FontSize="13"
+                             FontWeight="Medium"
+                             FontFamily="Montserrat"
+                             Foreground="White"
+                             CaretBrush="LightGray"
+                             BorderBrush="DarkGray"
+                             BorderThickness="0,0,0,2"
+                             Height="30"
+                             Width="500"         
+                             VerticalContentAlignment="Center"
+                             Margin="2,5,0,0"
+                             Padding="20,0,0,0">
+                        <TextBox.Background>
+                            <ImageBrush ImageSource="/Images/date.png"
+                            Stretch="None"
+                            AlignmentX="Left"/>
+                        </TextBox.Background>
+                    </TextBox>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Alamat"
+                              Foreground="DarkGray"
+                              FontSize="12"
+                              FontWeight="Medium"
+                              FontFamily="Montserrat"
+                              Margin="0,0,10,0"
+                              VerticalAlignment="Center"/>
+
+
+
+                    <TextBox x:Name="txtAlamat"
+                                    Text=""
+                                    FontSize="13"
+                                    FontWeight="Medium"
+                                    FontFamily="Montserrat"
+                                    Foreground="White"
+                                    CaretBrush="LightGray"
+                                    BorderBrush="DarkGray"
+                                    BorderThickness="0,0,0,2"
+                                    Height="30"
+                                    Width="500"         
+                                    VerticalContentAlignment="Center"
+                                    Margin="40,5,0,0"
+                                    Padding="20,0,0,0">
+                        <TextBox.Background>
+                            <ImageBrush ImageSource="/Images/date.png"
+                       Stretch="None"
+                       AlignmentX="Left"/>
+                        </TextBox.Background>
+                    </TextBox>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Email"
+                              Foreground="DarkGray"
+                              FontSize="12"
+                              FontWeight="Medium"
+                              FontFamily="Montserrat"
+                              Margin="0,0,10,0"
+                              VerticalAlignment="Center"/>
+
+
+
+                    <TextBox x:Name="txtEmail"
+                            Text=""
+                            FontSize="13"
+                            FontWeight="Medium"
+                            FontFamily="Montserrat"
+                            Foreground="White"
+                            CaretBrush="LightGray"
+                            BorderBrush="DarkGray"
+                            BorderThickness="0,0,0,2"
+                            Height="30"
+                            Width="500"         
+                            VerticalContentAlignment="Center"
+                            Margin="50,5,0,0"
+                            Padding="20,0,0,0">
+                        <TextBox.Background>
+                            <ImageBrush ImageSource="/Images/date.png"
+                       Stretch="None"
+                       AlignmentX="Left"/>
+                        </TextBox.Background>
+                    </TextBox>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Password"
+                              Foreground="DarkGray"
+                              FontSize="12"
+                              FontWeight="Medium"
+                              FontFamily="Montserrat"
+                              Margin="0,0,10,0"
+                              VerticalAlignment="Center"/>
+
+
+
+
+                    <customcontrols:BindablePasswordBox
+                    Height="28"                            
+                    Margin="26,5,0,0"
+                        Width="500">
+                    </customcontrols:BindablePasswordBox>
+                </StackPanel>
+                
+
+                
+            </StackPanel>
+            
+        </Grid>
+        <Border Grid.Row="1"
+                Background="#200F53"
+                CornerRadius="10" 
+                Padding="10">
+
+            <DataGrid ColumnWidth="*"
+                  Background="#200F53"
+                  BorderThickness="0">
+
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Foreground" Value="#BCBEE0"/>
+                        <Setter Property="Padding" Value="10,0,0,10"/>
+                        <Setter Property="FontFamily" Value="Montserrat"/>
+                        <Setter Property="FontSize" Value="15"/>
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="No" HeaderStringFormat=""/>
+                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Pengirim"/>
+                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Subjek"/>
+                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Penerima"/>
+                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Keterangan"/>
+                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Status"/>
+                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Tanggal"/>
+                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Action"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+
+        <Border Grid.Row="2" BorderBrush="DarkGray" Margin="5" BorderThickness="2" CornerRadius="10"/>
+
+
+        <!--Kanan-->
+
+    </Grid>
+</UserControl>

@@ -71,6 +71,7 @@ namespace WPF_LoginForm.Repositories
                             LastName = reader["lastname"].ToString(),
                             Email = reader["email"].ToString(),
                             ProfilePicture = reader["profilepicture"].ToString(),
+                            UserRole = reader["role"].ToString(),
 
                         };
                     }

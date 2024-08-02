@@ -16,22 +16,13 @@ using System.Windows.Shapes;
 namespace WPF_LoginForm.Views
 {
     /// <summary>
-    /// Interaction logic for HomeView.xaml
+    /// Interaction logic for DataKaryawan.xaml
     /// </summary>
-    public partial class HomeView : UserControl
+    public partial class DataKaryawan : UserControl
     {
-        public HomeView()
+        public DataKaryawan()
         {
             InitializeComponent();
-        }
-
-        private void txtsearch_GotFocus(object sender, RoutedEventArgs e)
-        {
-            var txtsearch = sender as TextBox;
-            if (txtsearch != null)
-            {
-                txtsearch.Text = string.Empty;
-            }
         }
     }
 }

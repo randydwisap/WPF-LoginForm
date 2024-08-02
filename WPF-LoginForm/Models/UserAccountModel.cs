@@ -39,6 +39,17 @@ namespace WPF_LoginForm.Models
             }
         }
 
+        private string _userRole;
+        public string UserRole
+        {
+            get { return _userRole; }
+            set
+            {
+                _userRole = value;
+                OnPropertyChanged(nameof(UserRole));
+            }
+        }
+
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
