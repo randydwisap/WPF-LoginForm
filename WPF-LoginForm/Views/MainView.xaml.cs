@@ -1,18 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Runtime.InteropServices;
-using System.Runtime;
+using System.Windows;
+using System.Windows.Input;
 using System.Windows.Interop;
 
 namespace WPF_LoginForm.Views
@@ -50,11 +39,8 @@ namespace WPF_LoginForm.Views
             this.WindowState = WindowState.Minimized;
         }
 
-        private void btnMaximize_Click(object sender, RoutedEventArgs e)
+        private void btnSuratMasuk_Checked(object sender, RoutedEventArgs e)
         {
-            if(this.WindowState == WindowState.Normal)
-                this.WindowState = WindowState.Maximized;
-            else this.WindowState = WindowState.Normal;
 
         }
     }

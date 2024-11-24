@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace WPF_LoginForm.Views
 {
@@ -22,6 +11,7 @@ namespace WPF_LoginForm.Views
         public LoginView()
         {
             InitializeComponent();
+            txtUser.Focus();
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -32,7 +22,7 @@ namespace WPF_LoginForm.Views
 
         private void btnMinimize_Click(object sender, RoutedEventArgs e)
         {
-            WindowState = WindowState.Minimized;
+            WindowState = WindowState.Normal;
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -40,11 +30,6 @@ namespace WPF_LoginForm.Views
             Application.Current.Shutdown();
         }
 
-        private void btnLogin_Click(object sender, RoutedEventArgs e) { }
 
-        private void btnLogin_Click_1(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

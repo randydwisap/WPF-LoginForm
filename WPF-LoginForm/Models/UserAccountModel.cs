@@ -6,47 +6,47 @@ namespace WPF_LoginForm.Models
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private string _username;
+        private string _UserName;
         public string Username
         {
-            get { return _username; }
+            get { return _UserName; }
             set
             {
-                _username = value;
+                _UserName = value;
                 OnPropertyChanged(nameof(Username));
             }
         }
 
-        private string _displayName;
-        public string DisplayName
+        private string _Name;
+        public string Name
         {
-            get { return _displayName; }
+            get { return _Name; }
             set
             {
-                _displayName = value;
-                OnPropertyChanged(nameof(DisplayName));
+                _Name = value;
+                OnPropertyChanged(nameof(Name));
             }
         }
 
-        private string _profilePicture;
+        private string _ProfilePicture;
         public string ProfilePicture
         {
-            get { return _profilePicture; }
+            get { return _ProfilePicture; }
             set
             {
-                _profilePicture = value;
+                _ProfilePicture = value;
                 OnPropertyChanged(nameof(ProfilePicture));
             }
         }
 
-        private string _userRole;
-        public string UserRole
+        private string _Role;
+        public string Role
         {
-            get { return _userRole; }
+            get { return _Role; }
             set
             {
-                _userRole = value;
-                OnPropertyChanged(nameof(UserRole));
+                _Role = value;
+                OnPropertyChanged(nameof(Role));
             }
         }
 

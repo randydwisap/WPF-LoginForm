@@ -1,4 +1,6 @@
-﻿using FontAwesome.Sharp;
+﻿using System.IO;
+using FontAwesome.Sharp;
+using System;
 using System.Threading;
 using System.Windows.Input;
 using WPF_LoginForm.Models;
@@ -24,6 +26,8 @@ namespace WPF_LoginForm.ViewModels
                 OnPropertyChanged(nameof(CurrentUserAccount));
             }
         }
+
+        public static UserAccountModel CurrentUserStatic { get; private set; }
 
         public ViewModelBase CurrentChildView
         {
@@ -55,9 +59,9 @@ namespace WPF_LoginForm.ViewModels
             }
         }
 
-        public ICommand ShowHomeViewCommand { get; }
-        public ICommand ShowCustomerViewCommand { get; }
-        public ICommand ShowOrderViewCommand { get; }
+        public ICommand ShowTrackingViewCommand { get; }
+        public ICommand ShowEmailViewCommand { get; }
+        public ICommand ShowAgendaViewCommand { get; }
         public ICommand ShowDataKaryawanViewCommand { get; }
 
         public MainViewModel()
@@ -65,19 +69,42 @@ namespace WPF_LoginForm.ViewModels
             userRepository = new UserRepository();
             CurrentUserAccount = new UserAccountModel();
 
-            ShowHomeViewCommand = new ViewModelCommand(ExecuteShowHomeViewCommand);
-            ShowCustomerViewCommand = new ViewModelCommand(ExecuteShowCustomerViewCommand);
-            ShowOrderViewCommand = new ViewModelCommand(ExecuteShowOrderViewCommand);
+            ShowTrackingViewCommand = new ViewModelCommand(ExecuteShowTrackingViewCommand);
+            ShowEmailViewCommand = new ViewModelCommand(ExecuteShowEmailViewCommand);
+            ShowAgendaViewCommand = new ViewModelCommand(ExecuteShowAgendaViewCommand);
             ShowDataKaryawanViewCommand = new ViewModelCommand(ExecuteShowDataKaryawanViewCommand);
 
-            ExecuteShowHomeViewCommand(null);
             LoadCurrentUserData();
+            CurrentUserStatic = CurrentUserAccount;
+
+            // Cek Role pengguna setelah memuat data
+            if (CurrentUserAccount.Role == "Admin")
+            {
+                // Tampilkan semua tampilan untuk Admin
+                ExecuteShowTrackingViewCommand(null);
+            }
+            else
+            {
+                // Hanya tampilkan TrackingView untuk selain Admin
+                ExecuteShowTrackingViewCommand(null);
+
+                // Nonaktifkan command lainnya jika bukan Admin
+                //ShowEmailViewCommand = null;
+                //ShowAgendaViewCommand = null;
+                ShowDataKaryawanViewCommand = null;
+            }
         }
 
-        private void ExecuteShowCustomerViewCommand(object obj)
+        public bool IsAdmin
         {
-            CurrentChildView = new CustomerViewModel();
-            Caption = "Email";
+            get { return CurrentUserAccount.Role == "Admin"; }
+        }
+
+
+        private void ExecuteShowEmailViewCommand(object obj)
+        {
+            CurrentChildView = new EmailViewModel();
+            Caption = "Memo";
             Icon = IconChar.EnvelopeCircleCheck;
         }
         private void ExecuteShowDataKaryawanViewCommand(object obj)
@@ -87,33 +114,55 @@ namespace WPF_LoginForm.ViewModels
             Icon = IconChar.User;
         }
 
-        private void ExecuteShowHomeViewCommand(object obj)
+        private void ExecuteShowTrackingViewCommand(object obj)
         {
-            CurrentChildView = new HomeViewModel();
-            Caption = "Tracking Surat";
+            CurrentChildView = new TrackingViewModel();
+            Caption = "Surat Masuk";
             Icon = IconChar.EnvelopeOpen;
         }
 
-        private void ExecuteShowOrderViewCommand(object obj)
+        private void ExecuteShowAgendaViewCommand(object obj)
         {
-            CurrentChildView = new OrderViewModel();
+            CurrentChildView = new AgendaViewModel();
             Caption = "Agenda";
             Icon = IconChar.Calendar;
-        } 
+        }
+
+        private readonly string _imageDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
+
         private void LoadCurrentUserData()
         {
             var user = userRepository.GetByUsername(Thread.CurrentPrincipal.Identity.Name);
             if (user != null)
             {
                 CurrentUserAccount.Username = user.Username;
-                CurrentUserAccount.DisplayName = $"{user.Name} {user.LastName}";
-                CurrentUserAccount.ProfilePicture = user.ProfilePicture; // Sesuaikan dengan properti yang ada di objek user
-                CurrentUserAccount.UserRole = user.UserRole; // Sesuaikan dengan properti yang ada di objek user
+                CurrentUserAccount.Name = $"{user.Name}";
+
+                // Perbarui ProfilePicture agar menunjuk ke direktori Images
+                if (!string.IsNullOrEmpty(user.ProfilePicture))
+                {
+                    string profilePath = Path.Combine(_imageDirectory, user.ProfilePicture);
+                    if (File.Exists(profilePath))
+                    {
+                        CurrentUserAccount.ProfilePicture = profilePath;
+                    }
+                    else
+                    {
+                        CurrentUserAccount.ProfilePicture = "Images/DefaultProfile.png"; // Path ke gambar default
+                    }
+                }
+                else
+                {
+                    CurrentUserAccount.ProfilePicture = "Images/DefaultProfile.png"; // Path ke gambar default
+                }
+
+                CurrentUserAccount.Role = user.Role == "Admin" ? "Admin" : "Karyawan";
+                CurrentUserStatic = CurrentUserAccount;
             }
             else
             {
-                CurrentUserAccount.DisplayName = "Invalid user, not logged in";
-                // Sembunyikan tampilan anak.
+                CurrentUserAccount.Name = "Invalid user, not logged in";
+                CurrentUserAccount.ProfilePicture = "Images/DefaultProfile.png"; // Gambar default jika pengguna tidak valid
             }
         }
     }

@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using WPF_LoginForm.Models;
 
-namespace WPF_LoginForm.Models
+public interface IUserRepository
 {
-    public interface IUserRepository
-    {
-        bool AuthenticateUser(NetworkCredential credential);
-        void Add(UserModel userModel);
-        void Edit(UserModel userModel);
-        void Remove(int id);
-        UserModel GetById(int id);
-        UserModel GetByUsername(string username);
-        IEnumerable<UserModel> GetByAll();
-        //...
-    }
+    void Add(UserModel userModel);
+    void Edit(UserModel userModel);
+    void Remove(int id);
+    IEnumerable<UserModel> GetByAll();
+    UserModel GetById(int userId); // Pastikan ini dideklarasikan
+    UserModel GetByUsername(string username);
+    IEnumerable<RoleModel> GetAllRoles();
+    bool AuthenticateUser(NetworkCredential credential);
 }

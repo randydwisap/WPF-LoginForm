@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Security;
 using System.Security.Principal;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using WPF_LoginForm.Models;
 using WPF_LoginForm.Repositories;
@@ -16,8 +12,8 @@ namespace WPF_LoginForm.ViewModels
     public class LoginViewModel : ViewModelBase
     {
         //Fields
-        private string _username;
-        private SecureString _password;
+        private string _Username;
+        private SecureString _Password;
         private string _errorMessage;
         private bool _isViewVisible = true;
 
@@ -28,12 +24,12 @@ namespace WPF_LoginForm.ViewModels
         {
             get
             {
-                return _username;
+                return _Username;
             }
 
             set
             {
-                _username = value;
+                _Username = value;
                 OnPropertyChanged(nameof(Username));
             }
         }
@@ -42,12 +38,12 @@ namespace WPF_LoginForm.ViewModels
         {
             get
             {
-                return _password;
+                return _Password;
             }
 
             set
             {
-                _password = value;
+                _Password = value;
                 OnPropertyChanged(nameof(Password));
             }
         }
@@ -110,6 +106,8 @@ namespace WPF_LoginForm.ViewModels
             var isValidUser = userRepository.AuthenticateUser(new NetworkCredential(Username, Password));
             if (isValidUser)
             {
+                // Ambil data pengguna yang berhasil login
+                //var currentUser = userRepository.GetByUsername(Username);
                 Thread.CurrentPrincipal = new GenericPrincipal(
                     new GenericIdentity(Username), null);
                 IsViewVisible = false;

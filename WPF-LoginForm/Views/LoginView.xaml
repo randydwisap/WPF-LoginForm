@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_LoginForm.Views"
-        xmlns:viewModel="clr-namespace:WPF_LoginForm.ViewModels" xmlns:customcontrols="clr-namespace:WPF_LoginForm.CustomControls"
+        xmlns:viewModel="clr-namespace:WPF_LoginForm.ViewModels" 
+        xmlns:customcontrols="clr-namespace:WPF_LoginForm.CustomControls"
         mc:Ignorable="d"
         Title="LoginView" Height="550" Width="800"
         WindowStyle="None"
@@ -21,6 +22,10 @@
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
     </Window.Resources>
+
+    <Window.InputBindings>
+        <KeyBinding Key="Enter" Command="{Binding LoginCommand}"/>
+    </Window.InputBindings>
 
     <Window.Visibility>
         <Binding Path="IsViewVisible" Mode="TwoWay" Converter="{StaticResource BooleanToVisibility}"/>
@@ -147,8 +152,23 @@
                             Orientation="Vertical"
                             Margin="0,35,0,0">
 
-                    <Image Source="/Images/Logo.png"
-                           Width="100" Height="100"/>
+                    <Ellipse  Height="110" Width="130"
+                              StrokeThickness="2"
+                              Margin="0,0,0,10"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center">
+                        <Ellipse.Fill>
+                            <ImageBrush Stretch="Fill" ImageSource="/Images/Logo.png"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+
+                    <!--<Border  Width="150"
+                             Height="100"
+                             BorderThickness="1"
+                             BorderBrush="White"
+                             CornerRadius="100">
+                        <Image Source="/Images/Logo.png"/>
+                    </Border>-->
 
                     <TextBlock Text="CV Belida"
                                Foreground="White"
@@ -223,7 +243,7 @@
                             FontSize="12"
                             FontFamily="Montserrat"
                             Cursor="Hand"                           
-                            Margin="0,30,0,0" Click="btnLogin_Click_1">
+                            Margin="0,30,0,0">
 
                         <Button.Style>
                             <Style TargetType="Button">
