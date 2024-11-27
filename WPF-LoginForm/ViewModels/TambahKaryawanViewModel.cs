@@ -167,7 +167,6 @@ namespace WPF_LoginForm.ViewModels
 
         public ICommand AddUserCommand { get; }
 
-        private readonly IUserRepository _userRepository;
         public TambahKaryawanViewModel()
         {
             var userRepository = new UserRepository();

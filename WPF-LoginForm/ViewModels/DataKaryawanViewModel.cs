@@ -39,8 +39,6 @@ namespace WPF_LoginForm.ViewModels
         public ICommand DeleteUserCommand { get; }
         public ICommand EditUserCommand { get; }
 
-        private readonly MainViewModel _mainViewModel;
-
         private string _searchText;
         public string SearchText
         {

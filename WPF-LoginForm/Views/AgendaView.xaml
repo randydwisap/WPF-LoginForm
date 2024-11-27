@@ -36,14 +36,14 @@
                     <Border CornerRadius="20" Background="#FEFEFE" Margin="15">
                         <StackPanel Orientation="Vertical" VerticalAlignment="Center">
                             
-                        <TextBlock Text="Desember"
+                        <TextBlock Text="{Binding MonthCurrent}"
                                    Foreground="#C73F69"
                                    FontSize="35"
                                    TextAlignment="Center"
                                    FontWeight="SemiBold"
                                    FontFamily="Montserrat"/>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <TextBlock Text="5" 
+                                <TextBlock Text="{Binding ThisMonthAgendaCount}" 
                                            FontSize="20" 
                                            Foreground="Black"
                                            FontFamily="Montserrat"/>
@@ -67,7 +67,7 @@
                                    FontWeight="SemiBold"
                                    FontFamily="Montserrat"/>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <TextBlock Text="2" 
+                                <TextBlock Text="{Binding TodayAgendaCount}" 
                                            FontSize="20" 
                                            Foreground="AliceBlue"
                                            FontFamily="Montserrat"/>
@@ -91,7 +91,7 @@
                                        FontWeight="SemiBold"
                                        FontFamily="Montserrat"/>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <TextBlock Text="1" 
+                                <TextBlock Text="{Binding TomorrowAgendaCount}"
                                            FontSize="20" 
                                            Foreground="AliceBlue"
                                            FontFamily="Montserrat"/>
@@ -103,53 +103,131 @@
                             </StackPanel>
                         </StackPanel>
                     </Border>
+                    
                 </Grid>
             </Grid>
             <Grid Grid.Row="1">
-                <Border     Background="#200F53"
+                <Border     Background="White"
                             CornerRadius="10" 
                             Padding="10">
                     
-                <DataGrid ColumnWidth="*"
+                <DataGrid ItemsSource="{Binding FilteredAgendaH}"
                           Background="Transparent"
-                          BorderThickness="0"
-                          Foreground="Black">
+BorderThickness="0"
+Foreground="Black"
+AutoGenerateColumns="False"
+FontSize="16"
+RowHeight="35"
+ColumnHeaderHeight="40"
+GridLinesVisibility="Vertical"
+BorderBrush="Black"
+Padding="0"
+Margin="0"
+HorizontalAlignment="Stretch"
+HeadersVisibility="Column"
+CanUserAddRows="False"
+IsReadOnly="True">
 
-                    <DataGrid.CellStyle>
-                        <Style TargetType="DataGridCell">
-                            <Setter Property="Background" Value="Transparent"/>
-                            <Setter Property="Foreground" Value="White"/>
-                            <Setter Property="Padding" Value="10,0,0,10"/>
-                            <Setter Property="BorderBrush" Value="#BCBEE0"/>
-                            <Setter Property="BorderThickness" Value="2"/>
-                            <Setter Property="FontFamily" Value="Montserrat"/>
-                            <Setter Property="FontSize" Value="15"/>
-                        </Style>
-                    </DataGrid.CellStyle>
-                    <DataGrid.RowStyle>
-                        <Style TargetType="DataGridRow">
-                            <Setter Property="Background" Value="Transparent"/>
-                            <Setter Property="Foreground" Value="White"/>
-                        </Style>
-                    </DataGrid.RowStyle>
-                    <DataGrid.ColumnHeaderStyle>
-                        <Style TargetType="DataGridColumnHeader">
-                            <Setter Property="Background" Value="Transparent"/>
-                            <Setter Property="Foreground" Value="#BCBEE0"/>
-                            <Setter Property="Padding" Value="10,0,0,10"/>
-                            <Setter Property="FontFamily" Value="Montserrat"/>
-                            <Setter Property="FontSize" Value="15"/>
-                        </Style>
-                    </DataGrid.ColumnHeaderStyle>
+                        <DataGrid.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Setter Property="Padding" Value="10,0,0,10"/>
+                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                <Setter Property="FontFamily" Value="Montserrat"/>
+                                <Setter Property="FontSize" Value="16"/>
 
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Tanggal" HeaderStringFormat=""/>
-                        <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Nama Agenda"/>
-                        <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Waktu"/>
-                            <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Anggota"/>
-                            <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Keterangan"/>
-                            <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Action"/>
-                    </DataGrid.Columns>
+                                <!-- Efek Hover untuk Sel -->
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="DataGridCell">
+                                            <Border Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="0">
+                                                <ContentPresenter VerticalAlignment="Center" />
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#E5E5E5" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.CellStyle>
+
+                        <!-- Gaya untuk Baris -->
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                <Setter Property="FontSize" Value="16"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <!-- Efek Hover untuk Baris -->
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#D3D3D3"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
+
+                        <!-- Gaya untuk Header Kolom -->
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Foreground" Value="#333333"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="Padding" Value="10,0,0,10"/>
+                                <Setter Property="FontFamily" Value="Montserrat"/>
+                                <Setter Property="FontSize" Value="18"/>
+                                <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                                <Setter Property="BorderBrush" Value="Black"/>
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
+
+                        <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Tgl}" ClipboardContentBinding="{x:Null}" Header="Tanggal" HeaderStringFormat="" Width="175"/>
+                        <DataGridTextColumn Binding="{Binding NamaAgenda}" ClipboardContentBinding="{x:Null}" Header="Agenda" Width="200"/>
+                        <DataGridTextColumn Binding="{Binding Waktu}" ClipboardContentBinding="{x:Null}" Header="Waktu" Width="100"/>
+                            <DataGridTextColumn Binding="{Binding UserCreate}" ClipboardContentBinding="{x:Null}" Header="User Create" Width="150"/>
+                            <DataGridTextColumn Binding="{Binding KeteranganAgenda}" ClipboardContentBinding="{x:Null}" Header="Keterangan" Width="300"/>
+                            <DataGridTemplateColumn Header="Action" Width="*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <Button Command=""
+                                        CommandParameter=""
+                                        Width="60"
+                                        Content="Edit"                            
+                                        FontSize="12"
+                                        FontFamily="Montserrat"
+                                        Cursor="Hand"
+                                        BorderThickness="0"
+                                        Foreground="White"
+                                        VerticalAlignment="Top"
+                                        Style="{StaticResource SearchButton}"
+                                        Background="DarkBlue"
+                                        Margin="2,0,5,0"/>
+                                            <Button Command=""
+                                        CommandParameter=""
+                                        Width="60"
+                                        Content="Hapus"                            
+                                        FontSize="12"
+                                        FontFamily="Montserrat"
+                                        Cursor="Hand"
+                                        BorderThickness="0"
+                                        Foreground="White"
+                                        VerticalAlignment="Top"
+                                        Style="{StaticResource SearchButton}"
+                                        Background="Red"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
                 </DataGrid>
                 </Border>
             </Grid>
@@ -160,137 +238,52 @@
             <RowDefinition Height="370"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid Name="GridKalender"  Height="370" Width="525" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1.2*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Border CornerRadius="20 0 0 20" Background="#FEFEFE" Grid.Column="0"/>
-            <Border CornerRadius="0 20 20 0" Grid.Column="1" Background="#C73F69" />
-            <StackPanel Orientation="Vertical" Grid.Column="0">
-                
+                <Grid Name="GridKalender"  Height="370" Width="515" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Row="0">
+                    <Border CornerRadius="20 20 20 20" Background="#FEFEFE" Grid.Column="0"/>
+           
+                    <StackPanel Orientation="Vertical" Grid.Column="0">
 
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10 0 0">
-                        <Button Style="{StaticResource iconButton}"
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10 0 0">
+                            <Button Style="{StaticResource iconButton}"
         Tag="{StaticResource color3}">
-                            <fa:IconImage Icon="AngleLeft" Height="18" Style="{StaticResource iconButtonIcon}"/>
-
-                        </Button>
-
-                        <Button Content="2024" Style="{StaticResource iconButton}" Tag="{StaticResource color3}" Width="100" FontSize="18"/>
-
-                        <Button Style="{StaticResource iconButton}"
-        Tag="{StaticResource color3}">
-                            <fa:IconImage Icon="AngleRight" Height="18" Style="{StaticResource iconButtonIcon}"/>
-
-                        </Button>
-
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,0" >
-                    <Button Style="{StaticResource iconButton}"
-Tag="{StaticResource color3}">
-                        <fa:IconImage Icon="AngleLeft" Style="{StaticResource iconButtonIcon}" Height="18"/>
-
-                    </Button>
-
-                    <Button Content="1" Style="{StaticResource iconButton}" Tag="{StaticResource color3}" Width="100" FontSize="18"/>
-
-                    <Button Style="{StaticResource iconButton}"
-Tag="{StaticResource color3}">
-                        <fa:IconImage Icon="AngleRight" Style="{StaticResource iconButtonIcon}" Height="18"/>
-
-                    </Button>
-
-                </StackPanel>
-                
-                <TextBlock x:Name="tbMonthYear" Text="Bulan" Foreground="#C73F69" FontSize="18" TextAlignment="Center" FontWeight="SemiBold" Margin="0 0 0 20"/>
-
-                <Calendar Margin="0,0,0,0" x:Name="calendar" CalendarItemStyle="{DynamicResource CalendarCalendarItemStyle1}" CalendarDayButtonStyle="{DynamicResource CalendarCalendarDayButtonStyle1}" Style="{DynamicResource CalendarStyle1}"/>
-            </StackPanel>
-
-                    <StackPanel Orientation="Vertical" Grid.Column="1" Width="400">
-                        <StackPanel Margin="10 45 30 10" Orientation="Horizontal">
-                            <TextBlock Text="16" FontSize="30" Foreground="#FFFFFF"/>
-
-                            <StackPanel Grid.Column="1" Margin="10 0 0 0" VerticalAlignment="Center">
-                                <TextBlock Text="November" Foreground="#FFFFFF" FontSize="16"/>
-                                <TextBlock Text="Monday" Foreground="#EBA5BB" FontSize="10"/>
-                            </StackPanel>
-
-                            <Button Style="{StaticResource iconButton}" Tag="{StaticResource color3}" Margin="35 0 5 0">
-                                <fa:IconImage Icon="AngleLeft" Style="{StaticResource iconButtonIcon}" Height="25"/>
+                                <fa:IconImage Icon="AngleLeft" Height="18" Style="{StaticResource iconButtonIcon}"/>
 
                             </Button>
+
+                            <Button Content="{Binding Year}" Style="{StaticResource iconButton}" Tag="{StaticResource color3}" Width="100" FontSize="18"/>
 
                             <Button Style="{StaticResource iconButton}"
-Tag="{StaticResource color3}">
-                                <fa:IconImage Icon="AngleRight" Style="{StaticResource iconButtonIcon}" Height="25"/>
+        Tag="{StaticResource color3}">
+                                <fa:IconImage Icon="AngleRight" Height="18" Style="{StaticResource iconButtonIcon}"/>
 
                             </Button>
+
                         </StackPanel>
 
-                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
-                            <TextBlock
-                                Text="Agenda Pertemuan 1"
-                                FontSize="15"
-                                FontWeight="Medium"
-                                FontFamily="Montserrat"
-                                Foreground="White"
-                                Height="30"
-                                Width="220"
-                                Margin="10,10,0,0"
-                                Padding="20,5,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center">
-                                <TextBlock.Background>
-                                    <ImageBrush ImageSource="/Images/pen-2.png"
-                                                Stretch="None"
-                                                AlignmentX="Left"/>
-                                </TextBlock.Background>
-                            </TextBlock>
-                            <TextBlock Text="09.00 - 10.00" 
-                                       Foreground="White"
-                                       Padding="30,0,0,0"
-                                       FontSize="10"
-                                       VerticalAlignment="Top"
-                                       Margin="0,0,0,0"
-                                       FontWeight="Medium"
-                                       FontFamily="Montserrat"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,0" >
+                            <Button Style="{StaticResource iconButton}" Command="{Binding PreviousMonthCommand}" Tag="{StaticResource color3}">
+                                <fa:IconImage Icon="AngleLeft" Style="{StaticResource iconButtonIcon}" Height="18"/>
+
+                            </Button>
+
+                            <Button Content="{Binding MonthAngka}" Style="{StaticResource iconButton}" Tag="{StaticResource color3}" Width="100" FontSize="18"/>
+
+                            <Button Style="{StaticResource iconButton}" Tag="{StaticResource color3}" Command="{Binding NextMonthCommand}">
+                                <fa:IconImage Icon="AngleRight" Style="{StaticResource iconButtonIcon}" Height="18"/>
+
+                            </Button>
+
                         </StackPanel>
-                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
-                            <TextBlock
-        Text="Agenda Pertemuan 2"
-        FontSize="15"
-        FontWeight="Medium"
-        FontFamily="Montserrat"
-        Foreground="White"
-        Height="30"
-        Width="220"
-        Margin="10,10,0,0"
-        Padding="20,5,0,0"
-        HorizontalAlignment="Left"
-        VerticalAlignment="Center">
-                                <TextBlock.Background>
-                                    <ImageBrush ImageSource="/Images/pen-2.png"
-                        Stretch="None"
-                        AlignmentX="Left"/>
-                                </TextBlock.Background>
-                            </TextBlock>
-                            <TextBlock Text="09.00 - 10.00" 
-               Foreground="White"
-               Padding="30,0,0,0"
-               FontSize="10"
-               VerticalAlignment="Top"
-               Margin="0,0,0,0"
-               FontWeight="Medium"
-               FontFamily="Montserrat"/>
-                        </StackPanel>
+
+                        <TextBlock x:Name="tbMonthYear" Text="{Binding Month, IsAsync=True}" Foreground="#C73F69" FontSize="18" TextAlignment="Center" FontWeight="SemiBold" Margin="0 0 0 20"/>
+
+                        <Calendar  SelectedDate="{Binding SelectedDate, Mode=TwoWay}" Margin="0,0,0,0" x:Name="calendar" CalendarItemStyle="{DynamicResource CalendarCalendarItemStyle1}" CalendarDayButtonStyle="{DynamicResource CalendarCalendarDayButtonStyle1}" Style="{DynamicResource CalendarStyle1}"/>
                     </StackPanel>
                 </Grid>
-                <Grid Grid.Row="1" Margin="15">
+                <Grid Grid.Row="1" Margin="15" Width="505" HorizontalAlignment="Center">
 
-                    <Border CornerRadius="15"
+                    <Border CornerRadius="20"
             BorderThickness="2" >
                         <Border.BorderBrush>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -301,7 +294,7 @@ Tag="{StaticResource color3}">
                         </Border.BorderBrush>
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="20"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
@@ -325,30 +318,25 @@ Tag="{StaticResource color3}">
                                                FontSize="12"
                                                FontWeight="Medium"
                                                FontFamily="Montserrat"
-                                               Margin="0,0,10,0"
+                                               Margin="0"
                                                VerticalAlignment="Center"/>
 
-                                    <TextBox x:Name="txtTanggal"
-                                                 Text=""
-                                                 FontSize="13"
-                                                 FontWeight="Medium"
-                                                 FontFamily="Montserrat"
-                                                 Foreground="White"
-                                                 CaretBrush="LightGray"
-                                                 BorderBrush="DarkGray"
-                                                 BorderThickness="0,0,0,2"
-                                                 Height="30"
-                                                 Width="300"         
-                                                 VerticalContentAlignment="Center"
-                                                 Margin="25,5,0,0"
-                                                 Padding="20,0,0,0">
-
-                                        <TextBox.Background>
-                                            <ImageBrush ImageSource="/Images/date.png"
-                                                        Stretch="None"
-                                                        AlignmentX="Left"/>
-                                        </TextBox.Background>
-                                    </TextBox>
+                                    <DatePicker x:Name="txtTanggal"
+                                                Text="{Binding CurrentDate}"
+                                                FontSize="13"
+                                                FontWeight="Medium"
+                                                FontFamily="Montserrat"
+                                                Foreground="Black"
+                                                BorderBrush="Transparent"
+                                                BorderThickness="0,0,0,2"
+                                                Height="30"
+                                                Width="300"         
+                                                VerticalContentAlignment="Center"
+                                                Margin="35,5,0,0"
+                                                Padding="0,0,0,0"
+                                                Background="Transparent"
+                                                SelectedDateFormat="Long"
+            />
                                 </StackPanel>
 
 
@@ -356,89 +344,139 @@ Tag="{StaticResource color3}">
 
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Agenda"
-   Foreground="DarkGray"
-   FontSize="12"
-   FontWeight="Medium"
-   FontFamily="Montserrat"
-   Margin="0,0,10,0"
-   VerticalAlignment="Center"/>
+                                               Foreground="DarkGray"
+                                               FontSize="12"
+                                               FontWeight="Medium"
+                                               FontFamily="Montserrat"
+                                               Margin="0,0,10,0"
+                                               VerticalAlignment="Center"/>
 
                                     <TextBox x:Name="txtAgenda"
- Text=""
- FontSize="13"
- FontWeight="Medium"
- FontFamily="Montserrat"
- Foreground="White"
- CaretBrush="LightGray"
- BorderBrush="DarkGray"
- BorderThickness="0,0,0,2"
- Height="30"
- Width="300"         
- VerticalContentAlignment="Center"
- Margin="27,5,0,0"
- Padding="20,0,0,0">
+                                             Text=""
+                                             FontSize="13"
+                                             FontWeight="Medium"
+                                             FontFamily="Montserrat"
+                                             Foreground="White"
+                                             CaretBrush="LightGray"
+                                             BorderBrush="DarkGray"
+                                             BorderThickness="0,0,0,2"
+                                             Height="30"
+                                             Width="300"         
+                                             VerticalContentAlignment="Center"
+                                             Margin="27,5,0,0"
+                                             Padding="20,0,0,0">
                                         <TextBox.Background>
-                                            <ImageBrush ImageSource="/Images/pen-2.png"
-            Stretch="None"
-            AlignmentX="Left" />
+                                            <ImageBrush ImageSource="/Images/pen-2.png" Stretch="None" AlignmentX="Left" />
+                                        </TextBox.Background>
+                                    </TextBox>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="User Create"
+                                               Foreground="DarkGray"
+                                               FontSize="12"
+                                               FontWeight="Medium"
+                                               FontFamily="Montserrat"
+                                               Margin="0,0,0,0"
+                                               VerticalAlignment="Center"/>
+
+                                    <TextBox x:Name="txtUserCreate"
+                                             Text=""
+                                             FontSize="13"
+                                             FontWeight="Medium"
+                                             FontFamily="Montserrat"
+                                             Foreground="White"
+                                             CaretBrush="LightGray"
+                                             BorderBrush="DarkGray"
+                                             BorderThickness="0,0,0,2"
+                                             Height="30"
+                                             Width="300"         
+                                             VerticalContentAlignment="Center"
+                                             Margin="15,5,0,0"
+                                             Padding="20,0,0,0">
+                                        <TextBox.Background>
+                                            <ImageBrush ImageSource="/Images/pen-2.png" Stretch="None" AlignmentX="Left" />
                                         </TextBox.Background>
                                     </TextBox>
                                 </StackPanel>
 
 
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Anggota"
-               Foreground="DarkGray"
-               FontSize="12"
-               FontWeight="Medium"
-               FontFamily="Montserrat"
-               Margin="0,0,10,0"
-               VerticalAlignment="Center"/>
-
-
-                                    <ComboBox x:Name="Anggota" 
-              Style="{StaticResource ComboBoxFlatStyle}" VerticalContentAlignment="Center" Width="298" FontSize="12" Height="28" Margin="22,5,0,0" FontFamily="Montserrat" FontWeight="Medium"
-              SelectedIndex="0">
-                                        <ComboBoxItem>Nama Karyawan 1</ComboBoxItem>
-                                        <ComboBoxItem>Nama Karyawan 2</ComboBoxItem>
-                                        <ComboBoxItem>Nama Karyawan 3</ComboBoxItem>
-
-                                    </ComboBox>
-                                </StackPanel>
+                                <StackPanel Orientation="Horizontal"/>
 
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Waktu"
-   Foreground="DarkGray"
-   FontSize="12"
-   FontWeight="Medium"
-   FontFamily="Montserrat"
-   Margin="0,0,10,0"
-   VerticalAlignment="Center"/>
+                                               Foreground="DarkGray"
+                                               FontSize="12"
+                                               FontWeight="Medium"
+                                               FontFamily="Montserrat"
+                                               Margin="0,0,10,0"
+                                               VerticalAlignment="Center"/>
 
-
-
-                                    <TextBox x:Name="txtWaktu"
- Text="{Binding CurrentDate}"
-                     Focusable="False"
- FontSize="13"
- FontWeight="Medium"
- FontFamily="Montserrat"
- Foreground="White"
- CaretBrush="LightGray"
- BorderBrush="DarkGray"
- BorderThickness="0,0,0,2"
- Height="30"
- Width="300"         
- VerticalContentAlignment="Center"
- Margin="35,5,0,0"
- Padding="20,0,0,0">
+                                    <ComboBox x:Name="timePicker"
+              SelectedItem="{Binding SelectedTime, Mode=TwoWay}"
+              Width="300"
+              Margin="35,5,0,0" Style="{StaticResource ComboBoxFlatStyle1}">
+                                        <ComboBoxItem Content="07:00" />
+                                        <ComboBoxItem Content="08:00" />
+                                        <ComboBoxItem Content="09:00" />
+                                        <ComboBoxItem Content="10:00" />
+                                        <ComboBoxItem Content="11:00" />
+                                        <ComboBoxItem Content="12:00" />
+                                        <ComboBoxItem Content="13:00" />
+                                        <ComboBoxItem Content="14:00" />
+                                        <ComboBoxItem Content="15:00" />
+                                        <ComboBoxItem Content="16:00" />
+                                        <ComboBoxItem Content="17:00" />
+                                    </ComboBox>
+                                    <!--<TextBox x:Name="txtWaktu"
+                                            Text="{Binding CurrentDate}"
+                                            Focusable="False"
+                                            FontSize="13"
+                                            FontWeight="Medium"
+                                            FontFamily="Montserrat"
+                                            Foreground="White"
+                                            CaretBrush="LightGray"
+                                            BorderBrush="DarkGray"
+                                            BorderThickness="0,0,0,2"
+                                            Height="30"
+                                            Width="300"         
+                                            VerticalContentAlignment="Center"
+                                            Margin="35,5,0,0"
+                                            Padding="20,0,0,0">
                                         <TextBox.Background>
                                             <ImageBrush ImageSource="/Images/date.png"
-                        Stretch="None"
-                        AlignmentX="Left"/>
+                                                        Stretch="None"
+                                                        AlignmentX="Left"/>
                                         </TextBox.Background>
-                                    </TextBox>
+                                    </TextBox>-->
                                 </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+                                    <TextBlock Text="Anggota"
+                                                Foreground="DarkGray"
+                                                FontSize="12"
+                                                FontWeight="Medium"
+                                                FontFamily="Montserrat"
+                                                Margin="0,0,0,0"
+                                                VerticalAlignment="Center"/>
+                                    <Button Content="Show"                            
+                                            FontSize="12"
+                                            FontFamily="Montserrat"
+                                            Cursor="Hand"
+                                            BorderThickness="0"
+                                            Foreground="White"
+                                            Width="100"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Margin="30,0,0,0"
+                                            Background="Green"
+                                            Command="{Binding ShowPopupCommand}"
+                                            Style="{StaticResource SearchButton}"/>
+
+
+                                </StackPanel>
+
+
 
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Keterangan"
@@ -475,13 +513,14 @@ Tag="{StaticResource color3}">
 
                                 <Button Content="Buat"                            
                             FontSize="12"
+                                        IsEnabled="False"
                             FontFamily="Montserrat"
                             Cursor="Hand"
                             BorderThickness="0"
                             Foreground="White"
                             Width="100"
                             HorizontalAlignment="Left"
-                            Margin="60,20,0,0"
+                            Margin="80,20,0,0"
                             Style="{StaticResource SearchButton}"/>
 
 

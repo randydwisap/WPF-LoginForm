@@ -1,8 +1,10 @@
 ﻿using MySql.Data.MySqlClient;
+using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using WPF_LoginForm.Models;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace WPF_LoginForm.Repositories
 {
@@ -335,6 +337,43 @@ namespace WPF_LoginForm.Repositories
             }
 
             return roles;
+        }
+
+
+        public IEnumerable<AgendaHModel> GetAgendaH()
+        {
+            var AgendaH = new List<AgendaHModel>();
+
+            try
+            {
+                using (var connection = GetConnection())
+                using (var command = new MySqlCommand("SELECT * FROM AgendaH", connection))
+                //command.Parameters.Add("@Username", MySqlDbType.VarChar).Value = username;
+                {
+                    connection.Open();
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            AgendaH.Add(new AgendaHModel
+                            {
+                                AgendaID = Convert.ToInt32(reader["AgendaID"]),
+                                NamaAgenda = reader["NamaAgenda"].ToString(),
+                                TglAgenda = Convert.ToDateTime(reader["TglAgenda"]),
+                                KeteranganAgenda = reader["KeteranganAgenda"].ToString(),
+                                UserCreate = reader["UserCreate"].ToString(),
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error fetching Agenda Header: {ex.Message}");
+                throw;
+            }
+
+            return AgendaH;
         }
 
     }
