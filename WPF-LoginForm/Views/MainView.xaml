@@ -12,19 +12,31 @@
         WindowStyle="None"
         Background="Transparent"
         WindowState="Maximized"
-        AllowsTransparency="True">
+        AllowsTransparency="True"
+        KeyDown="Window_KeyDown"
+        Focusable="True"
+        IsTabStop="True"
+        Loaded="Window_Loaded">
 
     <Window.DataContext>
         <viewModel:MainViewModel/>
     </Window.DataContext>
 
     <Window.Resources>
-        <DataTemplate DataType="{x:Type viewModel:TrackingViewModel}">
-            <local:TrackingView/>
+        <DataTemplate DataType="{x:Type viewModel:SuratMasukViewModel}">
+            <local:SuratMasukView/>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type viewModel:EmailViewModel}">
-            <local:EmailView/>
+        <DataTemplate DataType="{x:Type viewModel:SuratKeluarViewModel}">
+            <local:SuratKeluarView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:DisposisiViewModel}">
+            <local:DisposisiView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:MemoViewModel}">
+            <local:MemoView/>
         </DataTemplate>
 
         <DataTemplate DataType="{x:Type viewModel:AgendaViewModel}">
@@ -86,7 +98,7 @@
                     <!--!Surat Masuk Button!-->
                     <RadioButton Style="{StaticResource menuButton}"
                                  Tag="{StaticResource color1}"
-                                 Command="{Binding ShowTrackingViewCommand}"
+                                 Command="{Binding ShowSuratMasukViewCommand}"
                                  x:Name="btnSuratMasuk"
                                  IsChecked="True" Checked="btnSuratMasuk_Checked" >
                         <StackPanel Orientation="Horizontal">
@@ -98,22 +110,23 @@
                     <!--!Surat Keluar Button!-->
                     <RadioButton Style="{StaticResource menuButton}"
                                  Tag="{StaticResource color1}"
-                                 Command="{Binding ShowTrackingViewCommand}"
-                                 x:Name="btnSuratKeluar">
+                                 Command="{Binding ShowSuratKeluarViewCommand}"
+                                 x:Name="btnSuratKeluar" >
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="EnvelopeOpen" Style="{StaticResource menuButtonIcon}"/>
                             <TextBlock Text="Surat Keluar" Style="{StaticResource menuButtonText}"/>
                         </StackPanel>
                     </RadioButton>
 
-                    <!--<RadioButton Style="{StaticResource menuButton}"
-                                 Tag="{StaticResource color2}"
-                                 Command="{Binding ShowCustomerViewCommand}">
+                    <RadioButton Style="{StaticResource menuButton}"
+                                 Tag="{StaticResource color1}"
+                                 Command="{Binding ShowDisposisiViewCommand}"
+                                 x:Name="btnDisposisi">
                         <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="EnvelopeCircleCheck" Style="{StaticResource menuButtonIcon}"/>
-                            <TextBlock Text="Pengajuan Keluar" Style="{StaticResource menuButtonText}"/>
+                            <fa:IconImage Icon="FilePen" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="Disposisi" Style="{StaticResource menuButtonText}"/>
                         </StackPanel>
-                    </RadioButton>-->
+                    </RadioButton>
 
                     <RadioButton Style="{StaticResource menuButton}"
                                  Tag="{StaticResource color3}"
@@ -127,22 +140,13 @@
 
                     <RadioButton Style="{StaticResource menuButton}"
                                  Tag="{StaticResource color4}"
-                                 Command="{Binding ShowEmailViewCommand}"
-                                 x:Name="btnEmail">
+                                 Command="{Binding ShowMemoViewCommand}"
+                                 x:Name="btnMemo">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="MailBulk" Style="{StaticResource menuButtonIcon}"/>
                             <TextBlock Text="Memo" Style="{StaticResource menuButtonText}"/>
                         </StackPanel>
                     </RadioButton>
-
-                    <!--<RadioButton Style="{StaticResource menuButton}"
-             Tag="{StaticResource color5}"
-             >
-                        <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="MailForward" Style="{StaticResource menuButtonIcon}"/>
-                            <TextBlock Text="Email Keluar" Style="{StaticResource menuButtonText}"/>
-                        </StackPanel>
-                    </RadioButton>-->
 
                     <RadioButton Style="{StaticResource menuButton}"
              Tag="{StaticResource color6}"
@@ -250,7 +254,7 @@
                                        FontFamily="Montserrat"
                                        FontWeight="Medium"
                                        VerticalAlignment="Center"/>
-                            <TextBlock Text="{Binding CurrentUserAccount.Name}"
+                            <TextBlock Text="{Binding CurrentUserAccount.NomorHP}"
                                        Foreground="{StaticResource titleColor3}"
                                        FontSize="16"
                                        FontFamily="Montserrat"

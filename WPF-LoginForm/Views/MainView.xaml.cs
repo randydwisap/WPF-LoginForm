@@ -43,5 +43,32 @@ namespace WPF_LoginForm.Views
         {
 
         }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Cek jika tombol yang ditekan adalah Alt + S
+            if (e.Key == Key.S && (Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt)
+            {
+                MessageBox.Show("Alt + S Terdeteksi");
+                // Pilih RadioButton Surat Masuk
+                btnSuratMasuk.IsChecked = true;
+            }
+            // Cek jika tombol yang ditekan adalah Alt + K
+            else if (e.Key == Key.K && (Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt)
+            {
+                // Pilih RadioButton Surat Keluar
+                btnSuratKeluar.IsChecked = true;
+            }
+            else if (e.Key == Key.D && (Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt)
+            {
+                // Pilih RadioButton Surat Keluar
+                btnDisposisi.IsChecked = true;
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.Focus();
+        }
     }
 }

@@ -59,8 +59,10 @@ namespace WPF_LoginForm.ViewModels
             }
         }
 
-        public ICommand ShowTrackingViewCommand { get; }
-        public ICommand ShowEmailViewCommand { get; }
+        public ICommand ShowSuratMasukViewCommand { get; }
+        public ICommand ShowSuratKeluarViewCommand { get; }
+        public ICommand ShowDisposisiViewCommand { get; }
+        public ICommand ShowMemoViewCommand { get; }
         public ICommand ShowAgendaViewCommand { get; }
         public ICommand ShowDataKaryawanViewCommand { get; }
 
@@ -69,8 +71,11 @@ namespace WPF_LoginForm.ViewModels
             userRepository = new UserRepository();
             CurrentUserAccount = new UserAccountModel();
 
-            ShowTrackingViewCommand = new ViewModelCommand(ExecuteShowTrackingViewCommand);
-            ShowEmailViewCommand = new ViewModelCommand(ExecuteShowEmailViewCommand);
+            ShowSuratMasukViewCommand = new ViewModelCommand(ExecuteShowSuratMasukViewCommand);
+            ExecuteShowSuratMasukViewCommand(null);
+            ShowSuratKeluarViewCommand = new ViewModelCommand(ExecuteShowSuratKeluarViewCommand);
+            ShowDisposisiViewCommand = new ViewModelCommand(ExecuteShowDisposisiViewCommand);
+            ShowMemoViewCommand = new ViewModelCommand(ExecuteShowMemoViewCommand);
             ShowAgendaViewCommand = new ViewModelCommand(ExecuteShowAgendaViewCommand);
             ShowDataKaryawanViewCommand = new ViewModelCommand(ExecuteShowDataKaryawanViewCommand);
 
@@ -81,16 +86,10 @@ namespace WPF_LoginForm.ViewModels
             if (CurrentUserAccount.Role == "Admin")
             {
                 // Tampilkan semua tampilan untuk Admin
-                ExecuteShowTrackingViewCommand(null);
             }
             else
             {
-                // Hanya tampilkan TrackingView untuk selain Admin
-                ExecuteShowTrackingViewCommand(null);
-
                 // Nonaktifkan command lainnya jika bukan Admin
-                //ShowEmailViewCommand = null;
-                //ShowAgendaViewCommand = null;
                 ShowDataKaryawanViewCommand = null;
             }
         }
@@ -101,9 +100,9 @@ namespace WPF_LoginForm.ViewModels
         }
 
 
-        private void ExecuteShowEmailViewCommand(object obj)
+        private void ExecuteShowMemoViewCommand(object obj)
         {
-            CurrentChildView = new EmailViewModel();
+            CurrentChildView = new MemoViewModel();
             Caption = "Memo";
             Icon = IconChar.EnvelopeCircleCheck;
         }
@@ -114,12 +113,27 @@ namespace WPF_LoginForm.ViewModels
             Icon = IconChar.User;
         }
 
-        private void ExecuteShowTrackingViewCommand(object obj)
+        private void ExecuteShowSuratMasukViewCommand(object obj)
         {
-            CurrentChildView = new TrackingViewModel();
+            CurrentChildView = new SuratMasukViewModel();
             Caption = "Surat Masuk";
             Icon = IconChar.EnvelopeOpen;
         }
+
+        private void ExecuteShowSuratKeluarViewCommand(object obj)
+        {
+            CurrentChildView = new SuratKeluarViewModel();
+            Caption = "Surat Keluar";
+            Icon = IconChar.EnvelopeOpen;
+        }
+
+        private void ExecuteShowDisposisiViewCommand(object obj)
+        {
+            CurrentChildView = new DisposisiViewModel();
+            Caption = "Disposisi";
+            Icon = IconChar.EnvelopeOpen;
+        }
+
 
         private void ExecuteShowAgendaViewCommand(object obj)
         {
@@ -137,6 +151,7 @@ namespace WPF_LoginForm.ViewModels
             {
                 CurrentUserAccount.Username = user.Username;
                 CurrentUserAccount.Name = $"{user.Name}";
+                CurrentUserAccount.NomorHP= $"{user.NomorHP}";
 
                 // Perbarui ProfilePicture agar menunjuk ke direktori Images
                 if (!string.IsNullOrEmpty(user.ProfilePicture))
@@ -156,7 +171,7 @@ namespace WPF_LoginForm.ViewModels
                     CurrentUserAccount.ProfilePicture = "Images/DefaultProfile.png"; // Path ke gambar default
                 }
 
-                CurrentUserAccount.Role = user.Role == "Admin" ? "Admin" : "Karyawan";
+                CurrentUserAccount.Role = $"{user.Role}";
                 CurrentUserStatic = CurrentUserAccount;
             }
             else

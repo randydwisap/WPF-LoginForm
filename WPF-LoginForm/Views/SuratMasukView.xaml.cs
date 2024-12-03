@@ -6,9 +6,9 @@ namespace WPF_LoginForm.Views
     /// <summary>
     /// Interaction logic for HomeView.xaml
     /// </summary>
-    public partial class TrackingView : UserControl
+    public partial class SuratMasukView : UserControl
     {
-        public TrackingView()
+        public SuratMasukView()
         {
             InitializeComponent();
         }

@@ -376,5 +376,38 @@ namespace WPF_LoginForm.Repositories
             return AgendaH;
         }
 
+        public void AddAgenda(AgendaHModel agendaHModel)
+        {
+            try
+            {
+                using (var connection = GetConnection())
+                using (var command = new MySqlCommand())
+                {
+                    connection.Open();
+                    command.Connection = connection;
+
+                    command.CommandText = @"INSERT INTO agendah 
+                                            (NamaAgenda,TglAgenda, KeteranganAgenda, UserCreate)
+                                            VALUES 
+                                            (@NamaAgenda, @TglAgenda, @KeteranganAgenda, @UserCreate)";
+
+                    // Menambahkan parameter
+                    command.Parameters.Add("@NamaAgenda", MySqlDbType.VarChar).Value = agendaHModel.NamaAgenda;
+                    command.Parameters.Add("@TglAgenda", MySqlDbType.DateTime).Value = agendaHModel.TglAgenda;
+                    command.Parameters.Add("@KeteranganAgenda", MySqlDbType.VarChar).Value = agendaHModel.KeteranganAgenda;
+                    command.Parameters.Add("@UserCreate", MySqlDbType.VarChar).Value = agendaHModel.UserCreate;
+
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while adding user: {ex.Message}");
+                throw;
+            }
+        }
+
+
+
     }
 }

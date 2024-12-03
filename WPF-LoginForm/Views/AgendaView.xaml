@@ -9,10 +9,6 @@
              xmlns:viewModel="clr-namespace:WPF_LoginForm.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1650">
-    
-    <UserControl.DataContext>
-        <viewModel:AgendaViewModel/>
-    </UserControl.DataContext>
 
     <Grid>
         <!--Pembagian Kanan Kiri-->
@@ -105,13 +101,23 @@
                     </Border>
                     
                 </Grid>
+
+                <Grid Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <!--Besok -->
+                    <StackPanel Orientation="Horizontal">
+                    <Button Cursor="Hand" Command="{Binding ShowAddAgendaCommand}" Content="Tambah" Style="{StaticResource SearchButton}" Width="150" Foreground="White" Height="50" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Cursor="Hand"  Content="Print" Style="{StaticResource SearchButton}" Width="100" Foreground="White" Margin="15,0,0,0" Height="50" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
+
+
             </Grid>
             <Grid Grid.Row="1">
                 <Border     Background="White"
-                            CornerRadius="10" 
+                            CornerRadius="20" 
                             Padding="10">
                     
-                <DataGrid ItemsSource="{Binding FilteredAgendaH}"
+                <DataGrid ItemsSource="{Binding AgendaH}"
                           Background="Transparent"
 BorderThickness="0"
 Foreground="Black"
@@ -165,6 +171,7 @@ IsReadOnly="True">
                                 <Setter Property="BorderBrush" Value="Transparent"/>
                                 <Setter Property="FontSize" Value="16"/>
                                 <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="MaxHeight" Value="50"/>
                                 <!-- Efek Hover untuk Baris -->
                                 <Style.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
@@ -193,13 +200,23 @@ IsReadOnly="True">
                         <DataGridTextColumn Binding="{Binding NamaAgenda}" ClipboardContentBinding="{x:Null}" Header="Agenda" Width="200"/>
                         <DataGridTextColumn Binding="{Binding Waktu}" ClipboardContentBinding="{x:Null}" Header="Waktu" Width="100"/>
                             <DataGridTextColumn Binding="{Binding UserCreate}" ClipboardContentBinding="{x:Null}" Header="User Create" Width="150"/>
-                            <DataGridTextColumn Binding="{Binding KeteranganAgenda}" ClipboardContentBinding="{x:Null}" Header="Keterangan" Width="300"/>
+                            <DataGridTemplateColumn Header="Keterangan" Width="300">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding KeteranganAgenda}" 
+                                                   TextWrapping="Wrap" 
+                                                   VerticalAlignment="Center" 
+                                                   MaxHeight="20" />
+                                        <!-- Menetapkan batas maksimal tinggi jika diperlukan -->
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                             <DataGridTemplateColumn Header="Action" Width="*">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                            <Button Command=""
-                                        CommandParameter=""
+                                            <Button Command="{Binding DataContext.EditAgendaCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}"
                                         Width="60"
                                         Content="Edit"                            
                                         FontSize="12"
@@ -211,8 +228,8 @@ IsReadOnly="True">
                                         Style="{StaticResource SearchButton}"
                                         Background="DarkBlue"
                                         Margin="2,0,5,0"/>
-                                            <Button Command=""
-                                        CommandParameter=""
+                                            <Button Command="{Binding DataContext.DeleteAgendaCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                CommandParameter="{Binding}"
                                         Width="60"
                                         Content="Hapus"                            
                                         FontSize="12"
@@ -238,9 +255,9 @@ IsReadOnly="True">
             <RowDefinition Height="370"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-                <Grid Name="GridKalender"  Height="370" Width="515" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Row="0">
+                <Grid  Name="GridKalender"  Height="370" Width="515" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Row="0">
                     <Border CornerRadius="20 20 20 20" Background="#FEFEFE" Grid.Column="0"/>
-           
+
                     <StackPanel Orientation="Vertical" Grid.Column="0">
 
 
@@ -281,258 +298,99 @@ IsReadOnly="True">
                         <Calendar  SelectedDate="{Binding SelectedDate, Mode=TwoWay}" Margin="0,0,0,0" x:Name="calendar" CalendarItemStyle="{DynamicResource CalendarCalendarItemStyle1}" CalendarDayButtonStyle="{DynamicResource CalendarCalendarDayButtonStyle1}" Style="{DynamicResource CalendarStyle1}"/>
                     </StackPanel>
                 </Grid>
-                <Grid Grid.Row="1" Margin="15" Width="505" HorizontalAlignment="Center">
 
-                    <Border CornerRadius="20"
-            BorderThickness="2" >
-                        <Border.BorderBrush>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                <GradientStop Color="{StaticResource winBorderColor1}" Offset="0"/>
-                                <GradientStop Color="{StaticResource winBorderColor2}" Offset="0.75"/>
-                                <GradientStop Color="{StaticResource winBorderColor3}" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Border.BorderBrush>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="20"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0">
-                                <Border BorderThickness="0,0,0,0" >
-                                    <Border.BorderBrush>
-                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                            <GradientStop Color="{StaticResource winBorderColor1}" Offset="0"/>
-                                            <GradientStop Color="{StaticResource winBorderColor2}" Offset="0.75"/>
-                                            <GradientStop Color="{StaticResource winBorderColor3}" Offset="1"/>
-                                        </LinearGradientBrush>
-                                    </Border.BorderBrush>
-                                </Border>
-                            </Grid>
+                <Grid Grid.Row="1" Margin="0,15,0,0" Width="505" HorizontalAlignment="Center" Height="515">
+                    <Border CornerRadius="20" Background="White">
+                        <Grid Width="500" Height="400" Background="White">
+                            <StackPanel Orientation="Vertical" Margin="25,0">
+                                <TextBlock Text="Agenda Hari Ini" FontSize="20" FontWeight="SemiBold" FontFamily="Montserrat" Margin="0,0,0,20"/>
+                                <DataGrid ItemsSource="{Binding FilteredAgendaH}"
+                          Background="Transparent"
+BorderThickness="0"
+Foreground="Black"
+AutoGenerateColumns="False"
+FontSize="16"
+RowHeight="35"
+ColumnHeaderHeight="40"
+GridLinesVisibility="Vertical"
+BorderBrush="Black"
+Padding="0"
+Margin="0"
+HorizontalAlignment="Stretch"
+HeadersVisibility="Column"
+CanUserAddRows="False"
+IsReadOnly="True">
 
-                            <StackPanel Grid.Row="1" Orientation="Vertical"  HorizontalAlignment="Center">
+                                    <DataGrid.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="Foreground" Value="Black"/>
+                                            <Setter Property="Padding" Value="10,0,0,10"/>
+                                            <Setter Property="BorderBrush" Value="Transparent"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
+                                            <Setter Property="FontFamily" Value="Montserrat"/>
+                                            <Setter Property="FontSize" Value="16"/>
 
+                                            <!-- Efek Hover untuk Sel -->
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="DataGridCell">
+                                                        <Border Background="{TemplateBinding Background}"
+                                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                                BorderThickness="0">
+                                                            <ContentPresenter VerticalAlignment="Center" />
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#E5E5E5" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGrid.CellStyle>
 
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Tanggal"
-                                               Foreground="DarkGray"
-                                               FontSize="12"
-                                               FontWeight="Medium"
-                                               FontFamily="Montserrat"
-                                               Margin="0"
-                                               VerticalAlignment="Center"/>
+                                    <!-- Gaya untuk Baris -->
+                                    <DataGrid.RowStyle>
+                                        <Style TargetType="DataGridRow">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="Foreground" Value="Transparent"/>
+                                            <Setter Property="BorderBrush" Value="Transparent"/>
+                                            <Setter Property="FontSize" Value="16"/>
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                            <Setter Property="BorderThickness" Value="0,0,0,0"/>
+                                            <!-- Efek Hover untuk Baris -->
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#D3D3D3"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGrid.RowStyle>
 
-                                    <DatePicker x:Name="txtTanggal"
-                                                Text="{Binding CurrentDate}"
-                                                FontSize="13"
-                                                FontWeight="Medium"
-                                                FontFamily="Montserrat"
-                                                Foreground="Black"
-                                                BorderBrush="Transparent"
-                                                BorderThickness="0,0,0,2"
-                                                Height="30"
-                                                Width="300"         
-                                                VerticalContentAlignment="Center"
-                                                Margin="35,5,0,0"
-                                                Padding="0,0,0,0"
-                                                Background="Transparent"
-                                                SelectedDateFormat="Long"
-            />
-                                </StackPanel>
+                                    <!-- Gaya untuk Header Kolom -->
+                                    <DataGrid.ColumnHeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="Foreground" Value="#333333"/>
+                                            <Setter Property="FontWeight" Value="Bold"/>
+                                            <Setter Property="Padding" Value="10,0,0,10"/>
+                                            <Setter Property="FontFamily" Value="Montserrat"/>
+                                            <Setter Property="FontSize" Value="18"/>
+                                            <Setter Property="BorderThickness" Value="0,0,0,0"/>
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </Style>
+                                    </DataGrid.ColumnHeaderStyle>
 
-
-
-
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Agenda"
-                                               Foreground="DarkGray"
-                                               FontSize="12"
-                                               FontWeight="Medium"
-                                               FontFamily="Montserrat"
-                                               Margin="0,0,10,0"
-                                               VerticalAlignment="Center"/>
-
-                                    <TextBox x:Name="txtAgenda"
-                                             Text=""
-                                             FontSize="13"
-                                             FontWeight="Medium"
-                                             FontFamily="Montserrat"
-                                             Foreground="White"
-                                             CaretBrush="LightGray"
-                                             BorderBrush="DarkGray"
-                                             BorderThickness="0,0,0,2"
-                                             Height="30"
-                                             Width="300"         
-                                             VerticalContentAlignment="Center"
-                                             Margin="27,5,0,0"
-                                             Padding="20,0,0,0">
-                                        <TextBox.Background>
-                                            <ImageBrush ImageSource="/Images/pen-2.png" Stretch="None" AlignmentX="Left" />
-                                        </TextBox.Background>
-                                    </TextBox>
-                                </StackPanel>
-
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="User Create"
-                                               Foreground="DarkGray"
-                                               FontSize="12"
-                                               FontWeight="Medium"
-                                               FontFamily="Montserrat"
-                                               Margin="0,0,0,0"
-                                               VerticalAlignment="Center"/>
-
-                                    <TextBox x:Name="txtUserCreate"
-                                             Text=""
-                                             FontSize="13"
-                                             FontWeight="Medium"
-                                             FontFamily="Montserrat"
-                                             Foreground="White"
-                                             CaretBrush="LightGray"
-                                             BorderBrush="DarkGray"
-                                             BorderThickness="0,0,0,2"
-                                             Height="30"
-                                             Width="300"         
-                                             VerticalContentAlignment="Center"
-                                             Margin="15,5,0,0"
-                                             Padding="20,0,0,0">
-                                        <TextBox.Background>
-                                            <ImageBrush ImageSource="/Images/pen-2.png" Stretch="None" AlignmentX="Left" />
-                                        </TextBox.Background>
-                                    </TextBox>
-                                </StackPanel>
-
-
-                                <StackPanel Orientation="Horizontal"/>
-
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Waktu"
-                                               Foreground="DarkGray"
-                                               FontSize="12"
-                                               FontWeight="Medium"
-                                               FontFamily="Montserrat"
-                                               Margin="0,0,10,0"
-                                               VerticalAlignment="Center"/>
-
-                                    <ComboBox x:Name="timePicker"
-              SelectedItem="{Binding SelectedTime, Mode=TwoWay}"
-              Width="300"
-              Margin="35,5,0,0" Style="{StaticResource ComboBoxFlatStyle1}">
-                                        <ComboBoxItem Content="07:00" />
-                                        <ComboBoxItem Content="08:00" />
-                                        <ComboBoxItem Content="09:00" />
-                                        <ComboBoxItem Content="10:00" />
-                                        <ComboBoxItem Content="11:00" />
-                                        <ComboBoxItem Content="12:00" />
-                                        <ComboBoxItem Content="13:00" />
-                                        <ComboBoxItem Content="14:00" />
-                                        <ComboBoxItem Content="15:00" />
-                                        <ComboBoxItem Content="16:00" />
-                                        <ComboBoxItem Content="17:00" />
-                                    </ComboBox>
-                                    <!--<TextBox x:Name="txtWaktu"
-                                            Text="{Binding CurrentDate}"
-                                            Focusable="False"
-                                            FontSize="13"
-                                            FontWeight="Medium"
-                                            FontFamily="Montserrat"
-                                            Foreground="White"
-                                            CaretBrush="LightGray"
-                                            BorderBrush="DarkGray"
-                                            BorderThickness="0,0,0,2"
-                                            Height="30"
-                                            Width="300"         
-                                            VerticalContentAlignment="Center"
-                                            Margin="35,5,0,0"
-                                            Padding="20,0,0,0">
-                                        <TextBox.Background>
-                                            <ImageBrush ImageSource="/Images/date.png"
-                                                        Stretch="None"
-                                                        AlignmentX="Left"/>
-                                        </TextBox.Background>
-                                    </TextBox>-->
-                                </StackPanel>
-
-                                <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
-                                    <TextBlock Text="Anggota"
-                                                Foreground="DarkGray"
-                                                FontSize="12"
-                                                FontWeight="Medium"
-                                                FontFamily="Montserrat"
-                                                Margin="0,0,0,0"
-                                                VerticalAlignment="Center"/>
-                                    <Button Content="Show"                            
-                                            FontSize="12"
-                                            FontFamily="Montserrat"
-                                            Cursor="Hand"
-                                            BorderThickness="0"
-                                            Foreground="White"
-                                            Width="100"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Center"
-                                            Margin="30,0,0,0"
-                                            Background="Green"
-                                            Command="{Binding ShowPopupCommand}"
-                                            Style="{StaticResource SearchButton}"/>
-
-
-                                </StackPanel>
-
-
-
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Keterangan"
-   Foreground="DarkGray"
-   FontSize="12"
-   FontWeight="Medium"
-   FontFamily="Montserrat"
-   Margin="0,15,0,0"/>
-
-                                    <TextBox x:Name="txtIsi"
- Text=""
- FontSize="13"
- FontWeight="Medium"
- FontFamily="Montserrat"
- Foreground="White"
- CaretBrush="LightGray"
- BorderBrush="DarkGray"
- BorderThickness="2,2,2,2"
- Height="225"
- Width="300"
- VerticalContentAlignment="Top"
- TextWrapping="Wrap"
- AcceptsReturn="True"
- Margin="14,10,0,0"
- Padding="20,10,0,0">
-                                        <TextBox.Background>
-                                            <ImageBrush/>
-                                        </TextBox.Background>
-                                    </TextBox>
-
-
-
-                                </StackPanel>
-
-                                <Button Content="Buat"                            
-                            FontSize="12"
-                                        IsEnabled="False"
-                            FontFamily="Montserrat"
-                            Cursor="Hand"
-                            BorderThickness="0"
-                            Foreground="White"
-                            Width="100"
-                            HorizontalAlignment="Left"
-                            Margin="80,20,0,0"
-                            Style="{StaticResource SearchButton}"/>
-
-
-
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Visibility="Visible" Binding="{Binding NamaAgenda}" ClipboardContentBinding="{x:Null}" Header="Agenda" Width="300"/>
+                                        <DataGridTextColumn Visibility="Visible" Binding="{Binding Waktu}" ClipboardContentBinding="{x:Null}" Header="Waktu" Width="*"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
                             </StackPanel>
                         </Grid>
-                        <Border.Background>
-                            <LinearGradientBrush StartPoint="1,1" EndPoint="0,0">
-                                <GradientStop Color="{StaticResource primaryBackColor1}" Offset="0"/>
-                                <GradientStop Color="{StaticResource primaryBackColor2}" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Border.Background>
                     </Border>
                 </Grid>
             </Grid>

@@ -172,6 +172,7 @@
     </Compile>
     <Compile Include="Models\AgendaHModel.cs" />
     <Compile Include="Models\DataItem.cs" />
+    <Compile Include="Models\IAgendaRepository.cs" />
     <Compile Include="Models\IUserRepository.cs" />
     <Compile Include="Models\RoleModel.cs" />
     <Compile Include="Models\UserAccountModel.cs" />
@@ -182,25 +183,39 @@
       <DependentUpon>DataKaryawanReport.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Repositories\AgendaRepository.cs" />
     <Compile Include="Repositories\RepositoryBase.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Services\MessengerServices.cs" />
+    <Compile Include="Services\WhatsappBlast.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
-    <Compile Include="ViewModels\EmailViewModel.cs" />
+    <Compile Include="ViewModels\MemoViewModel.cs" />
     <Compile Include="ViewModels\DataKaryawanViewModel.cs" />
+    <Compile Include="ViewModels\DisposisiViewModel.cs" />
+    <Compile Include="ViewModels\AddAgendaWindowViewModel.cs" />
+    <Compile Include="ViewModels\SuratKeluarViewModel.cs" />
     <Compile Include="ViewModels\TambahKaryawanViewModel.cs" />
     <Compile Include="ViewModels\PopupWindowViewModel.cs" />
-    <Compile Include="ViewModels\TrackingViewModel.cs" />
+    <Compile Include="ViewModels\SuratMasukViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\AgendaViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\ViewModelCommand.cs" />
-    <Compile Include="Views\EmailView.xaml.cs">
-      <DependentUpon>EmailView.xaml</DependentUpon>
+    <Compile Include="Views\MemoView.xaml.cs">
+      <DependentUpon>MemoView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DataKaryawan.xaml.cs">
       <DependentUpon>DataKaryawan.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DisposisiView.xaml.cs">
+      <DependentUpon>DisposisiView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddAgendaWindow.xaml.cs">
+      <DependentUpon>AddAgendaWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SuratKeluarView.xaml.cs">
+      <DependentUpon>SuratKeluarView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TambahKaryawan.xaml.cs">
       <DependentUpon>TambahKaryawan.xaml</DependentUpon>
@@ -208,8 +223,8 @@
     <Compile Include="Views\PopupWindow.xaml.cs">
       <DependentUpon>PopupWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TrackingView.xaml.cs">
-      <DependentUpon>TrackingView.xaml</DependentUpon>
+    <Compile Include="Views\SuratMasukView.xaml.cs">
+      <DependentUpon>SuratMasukView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
@@ -236,11 +251,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\EmailView.xaml">
+    <Page Include="Views\MemoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DataKaryawan.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DisposisiView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AddAgendaWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SuratKeluarView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -252,7 +279,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\TrackingView.xaml">
+    <Page Include="Views\SuratMasukView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

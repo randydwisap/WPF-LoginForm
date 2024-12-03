@@ -2,23 +2,23 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data;
+using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using WPF_LoginForm.Models;
 using WPF_LoginForm.Repositories;
-using System.Linq;
-using System.Windows; // Tambahkan ini untuk menggunakan LINQ 
+using WPF_LoginForm.Views;
 
 namespace WPF_LoginForm.ViewModels
 {
     public class AgendaViewModel : ViewModelBase
     {
         private DateTime _currentDate;
-        private readonly IUserRepository _userRepository;
-        private DateTime? _selectedDate; // Tambahkan properti untuk menyimpan tanggal yang dipilih
+        private readonly IAgendaRepository _agendaRepository;
+        private DateTime? _selectedDate;
 
         public ObservableCollection<AgendaHModel> AgendaH { get; set; }
-        public ObservableCollection<AgendaHModel> FilteredAgendaH { get; set; } // Koleksi untuk menampilkan hasil filter
+        public ObservableCollection<AgendaHModel> FilteredAgendaH { get; set; }
 
         private string _message;
         public string Message
@@ -30,9 +30,14 @@ namespace WPF_LoginForm.ViewModels
                 OnPropertyChanged(nameof(Message));
             }
         }
+
         public int TodayAgendaCount => AgendaH.Count(a => a.TglAgenda.Date == DateTime.Today);
         public int TomorrowAgendaCount => AgendaH.Count(a => a.TglAgenda.Date == DateTime.Today.AddDays(1));
         public int ThisMonthAgendaCount => AgendaH.Count(a => a.TglAgenda.Month == DateTime.Today.Month && a.TglAgenda.Year == DateTime.Today.Year);
+
+        public ICommand ShowAddAgendaCommand { get; }
+        public ICommand EditAgendaCommand { get; }
+        public ICommand DeleteAgendaCommand { get; }
 
         public DateTime CurrentDate
         {
@@ -46,11 +51,10 @@ namespace WPF_LoginForm.ViewModels
                 OnPropertyChanged(nameof(YearCurrent));
                 OnPropertyChanged(nameof(DayCurrent));
                 OnPropertyChanged(nameof(HariCurrent));
-
             }
         }
 
-        public DateTime? SelectedDate // Properti untuk tanggal yang dipilih
+        public DateTime? SelectedDate
         {
             get => _selectedDate;
             set
@@ -62,14 +66,9 @@ namespace WPF_LoginForm.ViewModels
                 OnPropertyChanged(nameof(Year));
                 OnPropertyChanged(nameof(Day));
                 OnPropertyChanged(nameof(Hari));
-                FilterAgenda(); // Panggil metode untuk memfilter agenda
+                FilterAgenda(); // Call to filter the agenda when date changes
             }
         }
-
-        public ICommand NextMonthCommand { get; }
-        public ICommand PreviousMonthCommand { get; }
-        public ICommand PreviousDayCommand { get; }
-        public ICommand NextDayCommand { get; }
 
         public string Month => SelectedDate?.ToString("MMMM");
         public string Day => SelectedDate?.ToString("dd");
@@ -83,7 +82,8 @@ namespace WPF_LoginForm.ViewModels
         public string MonthAngkaCurrent => CurrentDate.ToString("MM");
         public string YearCurrent => CurrentDate.ToString("yyyy");
 
-        private string _searchKeyword; // Properti untuk menyimpan kata kunci pencarian
+
+        private string _searchKeyword;
         public string SearchKeyword
         {
             get => _searchKeyword;
@@ -91,43 +91,100 @@ namespace WPF_LoginForm.ViewModels
             {
                 _searchKeyword = value;
                 OnPropertyChanged(nameof(SearchKeyword));
-                FilterAgenda(); // Panggil metode untuk memfilter agenda
+                FilterAgenda(); // Call to filter the agenda when search keyword changes
             }
         }
 
+        public string NomorWA { get; set; }
+
         public AgendaViewModel()
         {
-            _userRepository = new UserRepository();
+            _agendaRepository = new AgendaRepository();
 
-            // Ambil data dari database
-            AgendaH = new ObservableCollection<AgendaHModel>(_userRepository.GetAgendaH());
-            FilteredAgendaH = new ObservableCollection<AgendaHModel>(AgendaH); // Inisialisasi dengan semua agenda
+            // Fetch data from repository
+            AgendaH = new ObservableCollection<AgendaHModel>(_agendaRepository.GetAllAgendaByUsername(MainViewModel.CurrentUserStatic.Username));
+            FilteredAgendaH = new ObservableCollection<AgendaHModel>(AgendaH); // Initialize with all agendas
             Message = "Agenda View";
+            NomorWA = MainViewModel.CurrentUserStatic.Name;
+
             CurrentDate = DateTime.Now;
-            SearchKeyword = MainViewModel.CurrentUserStatic.Username;
-            //SearchKeyword = "";
-            //MessageBox.Show(SearchKeyword);
-            SelectedDate = CurrentDate; // Set default SelectedDate ke CurrentDate
-            NextMonthCommand = new ViewModelCommand(_ => NextMonth());
-            NextDayCommand = new ViewModelCommand(_ => NextDay());
-            PreviousMonthCommand = new ViewModelCommand(_ => PreviousMonth());
-            PreviousDayCommand = new ViewModelCommand(_ => PreviousDay());
+            SelectedDate = CurrentDate; // Set default SelectedDate to CurrentDate
+
+            ShowAddAgendaCommand = new ViewModelCommand(ExecuteShowAddAgenda);
+            EditAgendaCommand = new ViewModelCommand(ExecuteEditAgenda);
+            DeleteAgendaCommand = new ViewModelCommand(ExecuteDeleteAgenda);
+        }
+
+        private void ExecuteShowAddAgenda(object obj)
+        {
+            var addAgendaWindowViewModel = new AddAgendaWindowViewModel();
+            var addAgendaWindow = new AddAgendaWindow
+            {
+                DataContext = addAgendaWindowViewModel
+            };
+
+            addAgendaWindow.Closed += (sender, e) => RefreshData();
+            addAgendaWindow.ShowDialog();
+        }
+
+        private void ExecuteEditAgenda(object obj)
+        {
+            if (obj is AgendaHModel agenda)
+            {
+                var addAgendaWindowViewModel = new AddAgendaWindowViewModel
+                {
+                    AgendaID = agenda.AgendaID,
+                    NamaAgenda = agenda.NamaAgenda,
+                    TglAgenda = agenda.TglAgenda,
+                    KeteranganAgenda = agenda.KeteranganAgenda,
+                    SelectedTime = DateTime.Today.Add(agenda.TglAgenda.TimeOfDay),
+                    UserCreate = agenda.UserCreate
+                };
+
+                var addAgendaWindow = new AddAgendaWindow
+                {
+                    DataContext = addAgendaWindowViewModel
+                };
+
+                addAgendaWindow.Closed += (sender, e) => RefreshData();
+                addAgendaWindow.ShowDialog();
+            }
+        }
+
+        private void ExecuteDeleteAgenda(object obj)
+        {
+            if (obj is AgendaHModel agenda)
+            {
+                var result = MessageBox.Show($"Are you sure you want to delete the agenda: {agenda.NamaAgenda}?",
+                                             "Confirm Delete",
+                                             MessageBoxButton.YesNo,
+                                             MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        _agendaRepository.RemoveAgenda(agenda.AgendaID);
+                        AgendaH.Remove(agenda);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Failed to delete agenda: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            RefreshData();
         }
 
         private void FilterAgenda()
         {
-            // Filter berdasarkan tanggal yang dipilih dan kata kunci pencarian
             var filtered = AgendaH.AsEnumerable();
 
+            // Filter by selected date
             if (SelectedDate.HasValue)
             {
                 var selectedDate = SelectedDate.Value.Date;
                 filtered = filtered.Where(a => a.TglAgenda.Date == selectedDate);
-            }
-
-            if (!string.IsNullOrWhiteSpace(SearchKeyword))
-            {
-                filtered = filtered.Where(a => a.UserCreate.IndexOf(SearchKeyword, StringComparison.OrdinalIgnoreCase) >= 0);
             }
 
             FilteredAgendaH.Clear();
@@ -137,30 +194,23 @@ namespace WPF_LoginForm.ViewModels
             }
         }
 
-        private string _loggedInUsername; // Simpan username yang sedang login
-
-        public DataTable ConvertToDataTable(IEnumerable<AgendaHModel> AgendasH)
+        private void RefreshData()
         {
-            var table = new DataTable();
-            table.Columns.Add("TglAgenda", typeof(DateTime));
-            table.Columns.Add("NamaAgenda", typeof(string));
-            table.Columns.Add("KeteranganAgenda", typeof(string));
-            table.Columns.Add("UserCreate", typeof(string));
+            // Mengambil ulang data agenda dari repository
+            var agendaFromDb = _agendaRepository.GetAllAgendaByUsername(MainViewModel.CurrentUserStatic.Username);
 
-            foreach (var AgendaH in AgendasH)
+            // Menghapus semua agenda yang sudah difilter
+            AgendaH.Clear();
+
+            // Menambahkan agenda yang terbaru ke FilteredAgendaH
+            foreach (var agenda in agendaFromDb)
             {
-                var row = table.NewRow();
-                row["TglAgenda"] = AgendaH.TglAgenda;
-                row["NamaAgenda"] = AgendaH.NamaAgenda;
-                row["KeteranganAgenda"] = AgendaH.KeteranganAgenda;
-                row["UserCreate"] = AgendaH.UserCreate;
-
-
-                table.Rows.Add(row);
+                AgendaH.Add(agenda);
             }
 
-            return table;
+            FilterAgenda();
         }
+
 
         public void NextMonth()
         {

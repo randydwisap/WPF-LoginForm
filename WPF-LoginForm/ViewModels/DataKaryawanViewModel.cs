@@ -14,6 +14,7 @@ using CrystalDecisions.Shared;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
+using WPF_LoginForm.Services;
 
 namespace WPF_LoginForm.ViewModels
 {
@@ -185,6 +186,14 @@ namespace WPF_LoginForm.ViewModels
 
         private void ExecuteShowPrint(object obj)
         {
+            //var contacts = new List<string> { MainViewModel.CurrentUserStatic.NomorHP };
+            //var message = "Halo ini pesan test WhatsApp";
+           // var filepath = String.Empty;
+           // WhatsappBlast whatsapp = new WhatsappBlast();
+
+           // whatsapp.SendMessages(contacts, message,filepath);
+            //whatsapp.Close();
+
             GenerateReport();
         }
 
@@ -199,7 +208,7 @@ namespace WPF_LoginForm.ViewModels
                     var dataTable = ConvertToDataTable(usersFromDb);
 
                     var reportDocument = new ReportDocument();
-                    reportDocument.Load("D:\\C# Project\\Login-In-WPF-MVVM-C-Sharp-and-SQL-Server-main\\WPF-LoginForm\\Reports\\DataKaryawanReport.rpt");
+                    reportDocument.Load("Reports\\DataKaryawanReport.rpt");
                     reportDocument.SetDataSource(dataTable);
 
                     // Gunakan CurrentUserAccount.Username sebagai PrintBy
@@ -212,10 +221,10 @@ namespace WPF_LoginForm.ViewModels
 
                     // Set parameter PrintBy di Crystal Report
                     //reportDocument.SetParameterValue("PrintBy", printBy);
-                    string printBy = MainViewModel.CurrentUserStatic?.Username ?? "Unknown";
+                    string printBy = MainViewModel.CurrentUserStatic?.Name ?? "Unknown";
                     reportDocument.SetParameterValue("PrintBy", printBy);
-
-                    string pdfPath = "C:\\Reports\\DataKaryawanReport.pdf";
+                    string dateNow = DateTime.Now.ToString("yyyy-MM-dd"); // Format: 2024-12-03
+                    string pdfPath = $"Reports\\PDF\\DataKaryawan_{dateNow}.pdf"; // Menambahkan tanggal ke nama file
                     reportDocument.ExportToDisk(ExportFormatType.PortableDocFormat, pdfPath);
 
                     Application.Current.Dispatcher.Invoke(() =>
@@ -272,12 +281,12 @@ namespace WPF_LoginForm.ViewModels
                 row["FullName"] = user.FullName;
                 row["Email"] = user.Email;
                 row["NomorHP"] = user.NomorHP;
-                row["ProfilePicture"] = user.ProfilePicture;
+                row["ProfilePicture"] = "D:\\C# Project\\Login-In-WPF-MVVM-C-Sharp-and-SQL-Server-main\\WPF-LoginForm\\bin\\Debug\\Images\\" + user.ProfilePicture;
                 row["Role"] = user.Role;
                 row["TandaTangan"] = user.TandaTangan;
 
                 // Isi kolom PrintBy dengan CurrentUserStatic.Username
-                row["PrintBy"] = MainViewModel.CurrentUserStatic?.Username ?? "Unknown";
+                row["PrintBy"] = MainViewModel.CurrentUserStatic?.Name ?? "Unknown";
 
                 table.Rows.Add(row);
             }

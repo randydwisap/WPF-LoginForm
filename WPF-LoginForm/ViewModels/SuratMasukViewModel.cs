@@ -6,7 +6,7 @@ using WPF_LoginForm.Views;
 
 namespace WPF_LoginForm.ViewModels
 {
-    public class TrackingViewModel : ViewModelBase
+    public class SuratMasukViewModel : ViewModelBase
     {
         public ObservableCollection<DataItem> Items { get; set; }
         private string _message;
@@ -22,7 +22,7 @@ namespace WPF_LoginForm.ViewModels
 
         public ICommand ShowPopupCommand { get; }
 
-        public TrackingViewModel()
+        public SuratMasukViewModel()
         {
             Items = new ObservableCollection<DataItem>
             {

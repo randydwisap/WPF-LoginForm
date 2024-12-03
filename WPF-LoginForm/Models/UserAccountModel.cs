@@ -50,6 +50,17 @@ namespace WPF_LoginForm.Models
             }
         }
 
+        private string _NomorHP;
+        public string NomorHP
+        {
+            get { return _NomorHP; }
+            set
+            {
+                _NomorHP = value;
+                OnPropertyChanged(nameof(NomorHP));
+            }
+        }
+
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
