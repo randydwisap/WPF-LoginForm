@@ -84,7 +84,7 @@ namespace WPF_LoginForm.Repositories
                 using (var connection = GetConnection())
                 {
                     // Menggunakan parameterized query untuk mencegah SQL injection
-                    var query = @"SELECT h.AgendaID,NamaAgenda,TglAgenda,KeteranganAgenda,UserCreate 
+                    var query = @"SELECT distinct h.AgendaID,NamaAgenda,TglAgenda,KeteranganAgenda,UserCreate 
                                   FROM agendah h ,agendad d
                                   WHERE d.AgendaID = h.AgendaID
                                   AND d.Username = @Username
@@ -221,5 +221,8 @@ namespace WPF_LoginForm.Repositories
                 throw;
             }
         }
+
+
+
     }
 }

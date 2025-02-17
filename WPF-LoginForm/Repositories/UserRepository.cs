@@ -1,8 +1,10 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Microsoft.Reporting.WinForms;
+using MySql.Data.MySqlClient;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Windows;
 using WPF_LoginForm.Models;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
@@ -303,6 +305,10 @@ namespace WPF_LoginForm.Repositories
             catch (Exception ex)
             {
                 Console.WriteLine($"Error while authenticating user: {ex.Message}");
+                MessageBox.Show("Tunggu XAMPP Berjalan dengan baik.\n\nNote : Jika Masih bermasalah hubungi Programmer",
+                "Database tidak ditemukan",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
                 throw;
             }
         }

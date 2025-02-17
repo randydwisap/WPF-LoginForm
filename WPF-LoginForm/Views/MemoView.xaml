@@ -24,7 +24,7 @@
                         Grid.Column="0">
                 <fa:IconImage Icon="Search" Height="20" Width="20" Foreground="{StaticResource plainTextColor3}"/>
 
-                <TextBox Text="Search..."   
+                <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"   
                     FontSize="13"
                          Height="24"
                            Width="300"
@@ -75,504 +75,169 @@
                     </Style>
                 </Button.Style>
             </Button>
-        </Grid>
-        <!--<Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0" Orientation="Vertical" Margin="20,10,0,0" HorizontalAlignment="Left">
-
-
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Pengirim"
-       Foreground="DarkGray"
-       FontSize="12"
-       FontWeight="Medium"
-       FontFamily="Montserrat"
-       Margin="0,0,10,0"
-       VerticalAlignment="Center"/>
-
-                    <TextBox x:Name="txtPengirim"
-     Text=""
-     FontSize="13"
-     FontWeight="Medium"
-     FontFamily="Montserrat"
-     Foreground="White"
-     CaretBrush="LightGray"
-     BorderBrush="DarkGray"
-     BorderThickness="0,0,0,2"
-     Height="30"
-     Width="500"         
-     VerticalContentAlignment="Center"
-     Margin="0,5,0,0"
-     Padding="20,0,0,0">
-
-                        <TextBox.Background>
-                            <ImageBrush ImageSource="/Images/user-icon.png"
-                Stretch="None"
-                AlignmentX="Left"/>
-                        </TextBox.Background>
-                    </TextBox>
-                </StackPanel>
-
-
-
-
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Subjek"
-       Foreground="DarkGray"
-       FontSize="12"
-       FontWeight="Medium"
-       FontFamily="Montserrat"
-       Margin="0,0,10,0"
-       VerticalAlignment="Center"/>
-
-                    <TextBox x:Name="txtSubjek"
-     Text=""
-     FontSize="13"
-     FontWeight="Medium"
-     FontFamily="Montserrat"
-     Foreground="White"
-     CaretBrush="LightGray"
-     BorderBrush="DarkGray"
-     BorderThickness="0,0,0,2"
-     Height="30"
-     Width="500"         
-     VerticalContentAlignment="Center"
-     Margin="15,5,0,0"
-     Padding="20,0,0,0">
-                        <TextBox.Background>
-                            <ImageBrush ImageSource="/Images/pen-2.png"
-                Stretch="None"
-                AlignmentX="Left" />
-                        </TextBox.Background>
-                    </TextBox>
-                </StackPanel>
-
-
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Penerima"
-                   Foreground="DarkGray"
-                   FontSize="12"
-                   FontWeight="Medium"
-                   FontFamily="Montserrat"
-                   Margin="0,0,10,0"
-                   VerticalAlignment="Center"/>
-
-                    --><!--<TextBox x:Name="txtPenerima"
-                 Text=""
-                 FontSize="13"
-                 FontWeight="Medium"
-                 FontFamily="Montserrat"
-                 Foreground="White"
-                 CaretBrush="LightGray"
-                 BorderBrush="DarkGray"
-                 BorderThickness="0,0,0,2"
-                 Height="30"
-                 Width="500"         
-                 VerticalContentAlignment="Center"
-                 Margin="-2,5,0,0"
-                 Padding="20,0,0,0">
-            <TextBox.Background>
-                <ImageBrush ImageSource="/Images/user-icon.png"
-    Stretch="None"
-    AlignmentX="Left"/>
-            </TextBox.Background>
-        </TextBox>--><!--
-                    <ComboBox x:Name="Penerima" 
-                  Style="{StaticResource ComboBoxFlatStyle}" VerticalContentAlignment="Center" Width="498" FontSize="12" Height="28" Margin="0,5,0,0" FontFamily="Montserrat" FontWeight="Medium"
-                  SelectedIndex="0">
-                        <ComboBoxItem>Nama Karyawan 1</ComboBoxItem>
-                        <ComboBoxItem>Nama Karyawan 2</ComboBoxItem>
-                        <ComboBoxItem>Nama Karyawan 3</ComboBoxItem>
-
-                    </ComboBox>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Tanggal"
-       Foreground="DarkGray"
-       FontSize="12"
-       FontWeight="Medium"
-       FontFamily="Montserrat"
-       Margin="0,0,10,0"
-       VerticalAlignment="Center"/>
-
-
-
-                    <TextBox x:Name="txtTanggal"
-     Text=""
-     FontSize="13"
-     FontWeight="Medium"
-     FontFamily="Montserrat"
-     Foreground="White"
-     CaretBrush="LightGray"
-     BorderBrush="DarkGray"
-     BorderThickness="0,0,0,2"
-     Height="30"
-     Width="500"         
-     VerticalContentAlignment="Center"
-     Margin="9,5,0,0"
-     Padding="20,0,0,0">
-                        <TextBox.Background>
-                            <ImageBrush ImageSource="/Images/date.png"
-                            Stretch="None"
-                            AlignmentX="Left"/>
-                        </TextBox.Background>
-                    </TextBox>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Isi Pesan"
-       Foreground="DarkGray"
-       FontSize="12"
-       FontWeight="Medium"
-       FontFamily="Montserrat"
-       Margin="0,15,0,0"/>
-
-                    <TextBox x:Name="txtIsi"
-     Text=""
-     FontSize="13"
-     FontWeight="Medium"
-     FontFamily="Montserrat"
-     Foreground="White"
-     CaretBrush="LightGray"
-     BorderBrush="DarkGray"
-     BorderThickness="2,2,2,2"
-     Height="225"
-     Width="500"
-     VerticalContentAlignment="Top"
-     TextWrapping="Wrap"
-     AcceptsReturn="True"
-     Margin="14,10,0,0"
-     Padding="20,0,0,0">
-                        <TextBox.Background>
-                            <ImageBrush/>
-                        </TextBox.Background>
-                    </TextBox>
-
-                    <Button Content="Tolak"                            
-FontSize="12"
-FontFamily="Montserrat"
-Cursor="Hand"
-BorderThickness="0"
-Foreground="White"
-Margin="10,0,0,0"
-                VerticalAlignment="Bottom">
-
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Background" Value="OrangeRed"/>
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-                                            <Border Height="40" Width="100"
-                CornerRadius="15"
-                Background="{TemplateBinding Background}">
-                                                <ContentPresenter VerticalAlignment="Center"
-                                  HorizontalAlignment="Center"/>
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="DarkRed"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-
-                    <Button Content="Setuju"                            
-FontSize="12"
-FontFamily="Montserrat"
-Cursor="Hand"
-                VerticalAlignment="Bottom"
-BorderThickness="0"
-Foreground="White"
-Margin="10,0,0,0">
-
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Background" Value="ForestGreen"/>
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-                                            <Border Height="40" Width="100"
-                CornerRadius="15"
-                Background="{TemplateBinding Background}">
-                                                <ContentPresenter VerticalAlignment="Center"
-                                  HorizontalAlignment="Center"/>
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="DarkOliveGreen"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-
-                </StackPanel>
-
-
-            </StackPanel>
-            <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Vertical" Margin="0,10,0,0" HorizontalAlignment="Left">
-
-
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Pengirim"
-       Foreground="DarkGray"
-       FontSize="12"
-       FontWeight="Medium"
-       FontFamily="Montserrat"
-       Margin="0,0,10,0"
-       VerticalAlignment="Center"/>
-
-                    <TextBox x:Name="txtPengirim2"
-     Text=""
-     FontSize="13"
-     FontWeight="Medium"
-     FontFamily="Montserrat"
-     Foreground="White"
-     CaretBrush="LightGray"
-     BorderBrush="DarkGray"
-     BorderThickness="0,0,0,2"
-     Height="30"
-     Width="500"         
-     VerticalContentAlignment="Center"
-     Margin="0,5,0,0"
-     Padding="20,0,0,0">
-
-                        <TextBox.Background>
-                            <ImageBrush ImageSource="/Images/user-icon.png"
-                Stretch="None"
-                AlignmentX="Left"/>
-                        </TextBox.Background>
-                    </TextBox>
-                </StackPanel>
-
-
-
-
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Subjek"
-       Foreground="DarkGray"
-       FontSize="12"
-       FontWeight="Medium"
-       FontFamily="Montserrat"
-       Margin="0,0,10,0"
-       VerticalAlignment="Center"/>
-
-                    <TextBox x:Name="txtSubjek2"
-     Text=""
-     FontSize="13"
-     FontWeight="Medium"
-     FontFamily="Montserrat"
-     Foreground="White"
-     CaretBrush="LightGray"
-     BorderBrush="DarkGray"
-     BorderThickness="0,0,0,2"
-     Height="30"
-     Width="500"         
-     VerticalContentAlignment="Center"
-     Margin="15,5,0,0"
-     Padding="20,0,0,0">
-                        <TextBox.Background>
-                            <ImageBrush ImageSource="/Images/pen-2.png"
-                Stretch="None"
-                AlignmentX="Left" />
-                        </TextBox.Background>
-                    </TextBox>
-                </StackPanel>
-
-
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Penerima"
-                   Foreground="DarkGray"
-                   FontSize="12"
-                   FontWeight="Medium"
-                   FontFamily="Montserrat"
-                   Margin="0,0,10,0"
-                   VerticalAlignment="Center"/>
-
-                    --><!--<TextBox x:Name="txtPenerima"
-                 Text=""
-                 FontSize="13"
-                 FontWeight="Medium"
-                 FontFamily="Montserrat"
-                 Foreground="White"
-                 CaretBrush="LightGray"
-                 BorderBrush="DarkGray"
-                 BorderThickness="0,0,0,2"
-                 Height="30"
-                 Width="500"         
-                 VerticalContentAlignment="Center"
-                 Margin="-2,5,0,0"
-                 Padding="20,0,0,0">
-            <TextBox.Background>
-                <ImageBrush ImageSource="/Images/user-icon.png"
-    Stretch="None"
-    AlignmentX="Left"/>
-            </TextBox.Background>
-        </TextBox>--><!--
-                    <ComboBox x:Name="Penerima2" 
-                  Style="{StaticResource ComboBoxFlatStyle}" VerticalContentAlignment="Center" Width="498" FontSize="12" Height="28" Margin="0,5,0,0" FontFamily="Montserrat" FontWeight="Medium"
-                  SelectedIndex="0">
-                        <ComboBoxItem>Nama Karyawan 1</ComboBoxItem>
-                        <ComboBoxItem>Nama Karyawan 2</ComboBoxItem>
-                        <ComboBoxItem>Nama Karyawan 3</ComboBoxItem>
-
-                    </ComboBox>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Tanggal"
-       Foreground="DarkGray"
-       FontSize="12"
-       FontWeight="Medium"
-       FontFamily="Montserrat"
-       Margin="0,0,10,0"
-       VerticalAlignment="Center"/>
-
-
-
-                    <TextBox x:Name="txtTanggal2"
-     Text=""
-     FontSize="13"
-     FontWeight="Medium"
-     FontFamily="Montserrat"
-     Foreground="White"
-     CaretBrush="LightGray"
-     BorderBrush="DarkGray"
-     BorderThickness="0,0,0,2"
-     Height="30"
-     Width="500"         
-     VerticalContentAlignment="Center"
-     Margin="9,5,0,0"
-     Padding="20,0,0,0">
-                        <TextBox.Background>
-                            <ImageBrush ImageSource="/Images/date.png"
-                            Stretch="None"
-                            AlignmentX="Left"/>
-                        </TextBox.Background>
-                    </TextBox>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Isi Pesan"
-       Foreground="DarkGray"
-       FontSize="12"
-       FontWeight="Medium"
-       FontFamily="Montserrat"
-       Margin="0,15,0,0"/>
-
-                    <TextBox x:Name="txtIsi2"
-     Text=""
-     FontSize="13"
-     FontWeight="Medium"
-     FontFamily="Montserrat"
-     Foreground="White"
-     CaretBrush="LightGray"
-     BorderBrush="DarkGray"
-     BorderThickness="2,2,2,2"
-     Height="225"
-     Width="500"
-     VerticalContentAlignment="Top"
-     TextWrapping="Wrap"
-     AcceptsReturn="True"
-     Margin="14,10,0,0"
-     Padding="20,0,0,0">
-                        <TextBox.Background>
-                            <ImageBrush/>
-                        </TextBox.Background>
-                    </TextBox>
-
-                    <Button Content="Kirim"                            
+            
+                        <Button Grid.Column="1"
+                            Command="{Binding ShowAddMemoCommand}"                            
+                            Content="Tambah"                            
                             FontSize="12"
                             FontFamily="Montserrat"
                             Cursor="Hand"
-                            VerticalAlignment="Bottom"
                             BorderThickness="0"
                             Foreground="White"
-                            Margin="10,0,0,0">
+                    VerticalAlignment="Top">
 
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Background" Value="ForestGreen"/>
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-                                            <Border Height="40" Width="100"
-                                                CornerRadius="15"
-                                                Background="{TemplateBinding Background}">
-                                                <ContentPresenter VerticalAlignment="Center"
-                                                                   HorizontalAlignment="Center"/>
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#773DFF"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Height="30"
+                                                    CornerRadius="15"
+                                                    Background="{TemplateBinding Background}">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                                                      HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
 
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="DarkOliveGreen"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#836EFB"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </Grid>
+        <Border Grid.Row="1"
+        Background="White"
+        CornerRadius="10" 
+        Padding="5">
 
-                </StackPanel>
+            <DataGrid ItemsSource="{Binding FilteredItems}" 
+              Background="Transparent"
+              BorderThickness="0"
+              Foreground="Black"
+              AutoGenerateColumns="False"
+              FontSize="16"
+              RowHeight="35"
+              ColumnHeaderHeight="40"
+              GridLinesVisibility="Vertical"
+              BorderBrush="Black"
+              Padding="0"
+              Margin="0"
+              HorizontalAlignment="Stretch"
+              HeadersVisibility="Column"
+              CanUserAddRows="False"
+              IsReadOnly="True">
 
+                <!-- Gaya untuk Sel -->
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="Padding" Value="10,0,0,10"/>
+                        <Setter Property="BorderBrush" Value="Transparent"/>
+                        <Setter Property="FontFamily" Value="Montserrat"/>
+                        <Setter Property="FontSize" Value="16"/>
 
-            </StackPanel>
+                        <!-- Efek Hover untuk Sel -->
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="DataGridCell">
+                                    <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="0">
+                                        <ContentPresenter VerticalAlignment="Center" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#E5E5E5" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.CellStyle>
 
-        </Grid>-->
-        
-        <!--data grid-->
-        <Border Grid.Row="2"
-                Background="#200F53"
-                CornerRadius="10" 
-                Padding="10">
+                <!-- Gaya untuk Baris -->
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="BorderBrush" Value="Transparent"/>
+                        <Setter Property="FontSize" Value="16"/>
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                        <!-- Efek Hover untuk Baris -->
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#D3D3D3"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
 
-            <DataGrid ColumnWidth="*"
-                  Background="#200F53"
-                  BorderThickness="0">
-
+                <!-- Gaya untuk Header Kolom -->
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="DataGridColumnHeader">
                         <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="Foreground" Value="#BCBEE0"/>
+                        <Setter Property="Foreground" Value="#333333"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
                         <Setter Property="Padding" Value="10,0,0,10"/>
                         <Setter Property="FontFamily" Value="Montserrat"/>
-                        <Setter Property="FontSize" Value="15"/>
+                        <Setter Property="FontSize" Value="18"/>
+                        <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                        <Setter Property="BorderBrush" Value="Black"/>
                     </Style>
                 </DataGrid.ColumnHeaderStyle>
 
+                <!-- Kolom DataGrid -->
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="No" HeaderStringFormat=""/>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Pengirim"/>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Subjek"/>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Penerima"/>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Keterangan"/>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Status"/>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Tanggal"/>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Action"/>
+                    <DataGridTextColumn Binding="{Binding MemoID}" Header="ID" Width="50"/>
+                    <DataGridTextColumn Binding="{Binding NamaMemo}" Header="Nama Memo"  Width="250"/>
+                    <DataGridTextColumn Binding="{Binding NamaAgenda}" Header="Agenda"  Width="275"/>
+                    <DataGridTextColumn Binding="{Binding IsiMemo}" Header="Isi Memo"  Width="570"/>
+                    <DataGridTextColumn Binding="{Binding FileMemo}" Header="File Memo"  Width="300"/>
+                    <DataGridTemplateColumn Header="Action" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Button Command="{Binding DataContext.ShowEditMemoCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}"
+                                        Width="75"
+                                        Content="Edit"                            
+                                        FontSize="12"
+                                        FontFamily="Montserrat"
+                                        Cursor="Hand"
+                                        BorderThickness="0"
+                                        Foreground="White"
+                                        VerticalAlignment="Top"
+                                        Style="{StaticResource SearchButton}"
+                                        Background="DarkBlue"
+                                        Margin="0,0,10,0"/>
+                                    <Button Command="{Binding DataContext.DeleteMemoCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}"
+                                        Width="75"
+                                        Content="Hapus"                            
+                                        FontSize="12"
+                                        FontFamily="Montserrat"
+                                        Cursor="Hand"
+                                        BorderThickness="0"
+                                        Foreground="White"
+                                        VerticalAlignment="Top"
+                                        Style="{StaticResource SearchButton}"
+                                        Background="Red"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
+
         </Border>
-
-        <Border Grid.Row="2" BorderBrush="DarkGray" Margin="5" BorderThickness="0" CornerRadius="10"/>
-
-
-        <!--Kanan-->
 
     </Grid>
 </UserControl>

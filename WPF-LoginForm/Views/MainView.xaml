@@ -254,7 +254,7 @@
                                        FontFamily="Montserrat"
                                        FontWeight="Medium"
                                        VerticalAlignment="Center"/>
-                            <TextBlock Text="{Binding CurrentUserAccount.NomorHP}"
+                            <TextBlock Text="{Binding CurrentUserAccount.Name}"
                                        Foreground="{StaticResource titleColor3}"
                                        FontSize="16"
                                        FontFamily="Montserrat"

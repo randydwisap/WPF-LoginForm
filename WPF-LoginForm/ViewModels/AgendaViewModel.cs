@@ -110,9 +110,18 @@ namespace WPF_LoginForm.ViewModels
             CurrentDate = DateTime.Now;
             SelectedDate = CurrentDate; // Set default SelectedDate to CurrentDate
 
+
             ShowAddAgendaCommand = new ViewModelCommand(ExecuteShowAddAgenda);
             EditAgendaCommand = new ViewModelCommand(ExecuteEditAgenda);
             DeleteAgendaCommand = new ViewModelCommand(ExecuteDeleteAgenda);
+            // Initialize commands
+            NextMonthCommand = new ViewModelCommand((obj) => NextMonth());
+            PreviousMonthCommand = new ViewModelCommand((obj) => PreviousMonth());
+            NextDayCommand = new ViewModelCommand((obj) => NextDay());
+            PreviousDayCommand = new ViewModelCommand((obj) => PreviousDay());
+            NextYearCommand = new ViewModelCommand((obj) => NextYear());
+            PreviousYearCommand = new ViewModelCommand((obj) => PreviousYear());
+
         }
 
         private void ExecuteShowAddAgenda(object obj)
@@ -196,40 +205,71 @@ namespace WPF_LoginForm.ViewModels
 
         private void RefreshData()
         {
-            // Mengambil ulang data agenda dari repository
+            // Ambil data agenda terbaru dari repository berdasarkan username
             var agendaFromDb = _agendaRepository.GetAllAgendaByUsername(MainViewModel.CurrentUserStatic.Username);
 
-            // Menghapus semua agenda yang sudah difilter
-            AgendaH.Clear();
+            // Menampilkan log untuk memverifikasi jumlah agenda yang diambil
+            Console.WriteLine($"Agenda count from DB: {agendaFromDb.Count()}");
 
-            // Menambahkan agenda yang terbaru ke FilteredAgendaH
+            // Clear data yang ada sebelumnya untuk memperbarui dengan data baru
+            AgendaH.Clear();
+            FilteredAgendaH.Clear();
+
+            // Menambahkan data agenda yang baru dari repository
             foreach (var agenda in agendaFromDb)
             {
+                Console.WriteLine($"Adding agenda: {agenda.AgendaID}");  // Menampilkan ID agenda yang ditambahkan
                 AgendaH.Add(agenda);
             }
 
+            // Terapkan filter pada data yang baru
             FilterAgenda();
         }
 
+        public ICommand NextMonthCommand { get; }
+        public ICommand PreviousMonthCommand { get; }
+        public ICommand NextDayCommand { get; }
+        public ICommand PreviousDayCommand { get; }
+        public ICommand NextYearCommand { get; }
+        public ICommand PreviousYearCommand { get; }
 
         public void NextMonth()
         {
             SelectedDate = SelectedDate?.AddMonths(1);
+            FilterAgenda();
         }
 
         public void PreviousMonth()
         {
             SelectedDate = SelectedDate?.AddMonths(-1);
+            FilterAgenda();
         }
 
         public void NextDay()
         {
             SelectedDate = SelectedDate?.AddDays(1);
+            FilterAgenda();
         }
 
         public void PreviousDay()
         {
             SelectedDate = SelectedDate?.AddDays(-1);
+            FilterAgenda();
         }
+
+        // Method untuk menambah tahun
+        public void NextYear()
+        {
+            SelectedDate = SelectedDate?.AddYears(1);
+            FilterAgenda();
+        }
+
+        // Method untuk mengurangi tahun
+        public void PreviousYear()
+        {
+            SelectedDate = SelectedDate?.AddYears(-1);
+            FilterAgenda();
+        }
+
     }
 }

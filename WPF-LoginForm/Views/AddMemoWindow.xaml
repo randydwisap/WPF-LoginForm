@@ -1,4 +1,4 @@
-﻿<Window x:Class="WPF_LoginForm.Views.AddAgendaWindow"
+﻿<Window x:Class="WPF_LoginForm.Views.AddMemoWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -14,7 +14,7 @@
         AllowsTransparency="True">
 
     <Window.DataContext>
-        <viewModel:AddAgendaWindowViewModel/>
+        <viewModel:AddMemoWindowViewModel/>
     </Window.DataContext>
     <Grid >
         
@@ -42,7 +42,7 @@
                             </LinearGradientBrush>
                         </Border.BorderBrush>
                     </Border>
-                    <TextBlock Text="Tambah Agenda" 
+                    <TextBlock Text="Tambah Memo" 
                            Foreground="White" 
                            FontSize="20" 
                            FontFamily="Montserrat" 
@@ -103,33 +103,37 @@
 
                             <StackPanel Grid.Row="1" Orientation="Vertical"  HorizontalAlignment="Center">
 
+                              
+                                <StackPanel Orientation="Horizontal"/>
 
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Tanggal"
-                                               Foreground="DarkGray"
-                                               FontSize="12"
-                                               FontWeight="Medium"
-                                               FontFamily="Montserrat"
-                                               Margin="0"
-                                               VerticalAlignment="Center"/>
+                                    <TextBlock Text="Memo"
+                Foreground="DarkGray"
+                FontSize="12"
+                FontWeight="Medium"
+                FontFamily="Montserrat"
+                Margin="0,0,25,0"
+                VerticalAlignment="Center"/>
 
-                                    <DatePicker x:Name="txtTanggal"
-                                                SelectedDate="{Binding TglAgenda, Mode=TwoWay}"
-                                                FontSize="13"
-                                                FontWeight="Medium"
-                                                FontFamily="Montserrat"
-                                                Foreground="Black"
-                                                BorderBrush="Transparent"
-                                                BorderThickness="0,0,0,2"
-                                                Height="30"
-                                                Width="300"         
-                                                VerticalContentAlignment="Center"
-                                                Margin="35,5,0,0"
-                                                Padding="0,0,0,0"
-                                                Background="Transparent"
-                                                SelectedDateFormat="Long" />
+                                    <TextBox x:Name="txtAgenda"
+              Text="{Binding NamaMemo}"
+              FontSize="13"
+              FontWeight="Medium"
+              FontFamily="Montserrat"
+              Foreground="White"
+              CaretBrush="LightGray"
+              BorderBrush="DarkGray"
+              BorderThickness="0,0,0,2"
+              Height="30"
+              Width="300"         
+              VerticalContentAlignment="Center"
+              Margin="27,5,0,0"
+              Padding="20,0,0,0">
+                                        <TextBox.Background>
+                                            <ImageBrush ImageSource="/Images/pen-2.png" Stretch="None" AlignmentX="Left" />
+                                        </TextBox.Background>
+                                    </TextBox>
                                 </StackPanel>
-
 
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Agenda"
@@ -139,94 +143,50 @@
                                                FontFamily="Montserrat"
                                                Margin="0,0,10,0"
                                                VerticalAlignment="Center"/>
-
-                                    <TextBox x:Name="txtAgenda"
-                                             Text="{Binding NamaAgenda}"
-                                             FontSize="13"
-                                             FontWeight="Medium"
-                                             FontFamily="Montserrat"
-                                             Foreground="White"
-                                             CaretBrush="LightGray"
-                                             BorderBrush="DarkGray"
-                                             BorderThickness="0,0,0,2"
-                                             Height="30"
-                                             Width="300"         
-                                             VerticalContentAlignment="Center"
-                                             Margin="27,5,0,0"
-                                             Padding="20,0,0,0">
-                                        <TextBox.Background>
-                                            <ImageBrush ImageSource="/Images/pen-2.png" Stretch="None" AlignmentX="Left" />
-                                        </TextBox.Background>
-                                    </TextBox>
-                                </StackPanel>
-                              
-                                <StackPanel Orientation="Horizontal"/>
-
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Waktu"
-                                               Foreground="DarkGray"
-                                               FontSize="12"
-                                               FontWeight="Medium"
-                                               FontFamily="Montserrat"
-                                               Margin="0,0,10,0"
-                                               VerticalAlignment="Center"/>
-                                    <ComboBox x:Name="timePicker"
-          Text="{Binding SelectedTimeAsString, Mode=TwoWay}"
-          SelectedItem="{Binding SelectedTimeAsString, Mode=TwoWay}"                                              
-          Width="300"
-          Margin="35,5,0,0"
-          Style="{StaticResource ComboBoxFlatStyle1}">
-                                        <ComboBoxItem Content="07:00" />
-                                        <ComboBoxItem Content="08:00" />
-                                        <ComboBoxItem Content="09:00" />
-                                        <ComboBoxItem Content="10:00" />
-                                        <ComboBoxItem Content="11:00" />
-                                        <ComboBoxItem Content="12:00" />
-                                        <ComboBoxItem Content="13:00" />
-                                        <ComboBoxItem Content="14:00" />
-                                        <ComboBoxItem Content="15:00" />
-                                        <ComboBoxItem Content="16:00" />
-                                        <ComboBoxItem Content="17:00" />
-                                    </ComboBox>
+                                    <ComboBox x:Name="cmbAgenda"
+                  ItemsSource="{Binding AgendaList}" 
+                  SelectedItem="{Binding SelectedAgenda, Mode=TwoWay}" 
+                  DisplayMemberPath="NamaAgenda"
+                  Width="300" Height="30"
+                                              Margin="35,0,0,0"
+                                              Padding="15,0,0,0"
+Style="{StaticResource ComboBoxFlatStyle1}"/>
 
                                 </StackPanel>
 
-                                <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
-                                    <TextBlock Text="Anggota"
-                                                Foreground="DarkGray"
-                                                FontSize="12"
-                                                FontWeight="Medium"
-                                                FontFamily="Montserrat"
-                                                Margin="0,0,0,0"
-                                                VerticalAlignment="Center"/>
-                                    <Button Content="Show"                            
-                                            FontSize="12"
-                                            FontFamily="Montserrat"
-                                            Cursor="Hand"
-                                            BorderThickness="0"
-                                            Foreground="White"
-                                            Width="100"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Center"
-                                            Margin="30,0,0,0"
-                                            Background="Green"
-                                            Command="{Binding ShowPopupCommand}"
-                                            Style="{StaticResource SearchButton}"/>
-                                    <Button Content="Send WA"                            
+
+                                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                    <TextBlock Text="File Memo"
+               Foreground="DarkGray"
+               FontSize="12"
+               FontWeight="Medium"
+               FontFamily="Montserrat"
+               VerticalAlignment="Center"/>
+
+                                    <Button Command="{Binding UploadFileCommand}"
+        Width="70"
+        Height="30"
+        Content="{Binding FileButtonText}"
         FontSize="12"
         FontFamily="Montserrat"
         Cursor="Hand"
         BorderThickness="0"
         Foreground="White"
-        Width="100"
-        HorizontalAlignment="Left"
-        VerticalAlignment="Center"
-        Margin="30,0,0,0"
-        Background="Green"
-        Command="{Binding ShowNomorWACommand}"
+        Background="{Binding UploadButtonColor}"
+        VerticalAlignment="Top"
+        Margin="25,0,10,0"
         Style="{StaticResource SearchButton}"/>
 
+                                    <TextBlock Text="{Binding FileMemoDisplay}"
+               Foreground="DarkGray"
+               FontSize="12"
+               FontWeight="Medium"
+               FontFamily="Montserrat"
+               Margin="0,0,10,0"
+               VerticalAlignment="Center"
+               x:Name="lblPictureProfile"/>
                                 </StackPanel>
+
 
 
 
@@ -238,7 +198,7 @@
    FontFamily="Montserrat"
    Margin="0,15,0,0"/>
                                     <TextBox x:Name="txtIsi"
- Text="{Binding KeteranganAgenda}"
+ Text="{Binding IsiMemo}"
  FontSize="13"
  FontWeight="Medium"
  FontFamily="Montserrat"
@@ -246,7 +206,7 @@
  CaretBrush="LightGray"
  BorderBrush="DarkGray"
  BorderThickness="2,2,2,2"
- Height="225"
+ Height="275"
  Width="300"
  VerticalContentAlignment="Top"
  TextWrapping="Wrap"
@@ -264,7 +224,7 @@
 
                                 <Button Content="Simpan"                            
                             FontSize="12"
-                                        Command="{Binding SaveCommand}"
+                                        Command="{Binding SaveMemoCommand}"
                                         IsEnabled="True"
                             FontFamily="Montserrat"
                             Cursor="Hand"

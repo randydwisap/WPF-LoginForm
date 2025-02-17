@@ -31,17 +31,6 @@ namespace WPF_LoginForm.ViewModels
                 // Tambahkan data lainnya di sini
             };
             Message = "Hello from UserControl ViewModel!";
-            ShowPopupCommand = new ViewModelCommand(ExecuteShowPopup);
-        }
-
-        private void ExecuteShowPopup(object obj)
-        {
-            var popupViewModel = new PopupWindowViewModel();
-            var popupWindow = new PopupWindow
-            {
-                DataContext = popupViewModel
-            };
-            popupWindow.ShowDialog();
         }
 
     }

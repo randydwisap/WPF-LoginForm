@@ -6,6 +6,17 @@ namespace WPF_LoginForm.Models
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private int _userID;
+        public int UserID
+        {
+            get { return _userID; }
+            set
+            {
+                _userID = value;
+                OnPropertyChanged(nameof(UserID)); // Tambahkan ini
+            }
+        }
+
         private string _UserName;
         public string Username
         {

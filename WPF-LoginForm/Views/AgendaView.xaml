@@ -116,23 +116,23 @@
                 <Border     Background="White"
                             CornerRadius="20" 
                             Padding="10">
-                    
-                <DataGrid ItemsSource="{Binding AgendaH}"
-                          Background="Transparent"
-BorderThickness="0"
-Foreground="Black"
-AutoGenerateColumns="False"
-FontSize="16"
-RowHeight="35"
-ColumnHeaderHeight="40"
-GridLinesVisibility="Vertical"
-BorderBrush="Black"
-Padding="0"
-Margin="0"
-HorizontalAlignment="Stretch"
-HeadersVisibility="Column"
-CanUserAddRows="False"
-IsReadOnly="True">
+
+                    <DataGrid ItemsSource="{Binding AgendaH}"
+                              Background="Transparent"
+     BorderThickness="0"
+     Foreground="Black"
+     AutoGenerateColumns="False"
+     FontSize="16"
+     RowHeight="35"
+     ColumnHeaderHeight="40"
+     GridLinesVisibility="Vertical"
+     BorderBrush="Black"
+     Padding="0"
+     Margin="0"
+     HorizontalAlignment="Stretch"
+     HeadersVisibility="Column"
+     CanUserAddRows="False"
+     IsReadOnly="True">
 
                         <DataGrid.CellStyle>
                             <Style TargetType="DataGridCell">
@@ -262,7 +262,7 @@ IsReadOnly="True">
 
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10 0 0">
-                            <Button Style="{StaticResource iconButton}"
+                            <Button Style="{StaticResource iconButton}" Command="{Binding PreviousYearCommand}"
         Tag="{StaticResource color3}">
                                 <fa:IconImage Icon="AngleLeft" Height="18" Style="{StaticResource iconButtonIcon}"/>
 
@@ -271,7 +271,7 @@ IsReadOnly="True">
                             <Button Content="{Binding Year}" Style="{StaticResource iconButton}" Tag="{StaticResource color3}" Width="100" FontSize="18"/>
 
                             <Button Style="{StaticResource iconButton}"
-        Tag="{StaticResource color3}">
+        Tag="{StaticResource color3}" Command="{Binding NextYearCommand}">
                                 <fa:IconImage Icon="AngleRight" Height="18" Style="{StaticResource iconButtonIcon}"/>
 
                             </Button>
@@ -295,7 +295,7 @@ IsReadOnly="True">
 
                         <TextBlock x:Name="tbMonthYear" Text="{Binding Month, IsAsync=True}" Foreground="#C73F69" FontSize="18" TextAlignment="Center" FontWeight="SemiBold" Margin="0 0 0 20"/>
 
-                        <Calendar  SelectedDate="{Binding SelectedDate, Mode=TwoWay}" Margin="0,0,0,0" x:Name="calendar" CalendarItemStyle="{DynamicResource CalendarCalendarItemStyle1}" CalendarDayButtonStyle="{DynamicResource CalendarCalendarDayButtonStyle1}" Style="{DynamicResource CalendarStyle1}"/>
+                        <Calendar DisplayDate="{Binding SelectedDate, Mode=OneWay}" SelectedDate="{Binding SelectedDate, Mode=TwoWay}" Margin="0,0,0,0" x:Name="calendar" CalendarItemStyle="{DynamicResource CalendarCalendarItemStyle1}" CalendarDayButtonStyle="{DynamicResource CalendarCalendarDayButtonStyle1}" Style="{DynamicResource CalendarStyle1}"/>
                     </StackPanel>
                 </Grid>
 

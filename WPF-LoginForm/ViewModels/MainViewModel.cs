@@ -152,6 +152,7 @@ namespace WPF_LoginForm.ViewModels
                 CurrentUserAccount.Username = user.Username;
                 CurrentUserAccount.Name = $"{user.Name}";
                 CurrentUserAccount.NomorHP= $"{user.NomorHP}";
+                CurrentUserAccount.UserID = user.UserID;
 
                 // Perbarui ProfilePicture agar menunjuk ke direktori Images
                 if (!string.IsNullOrEmpty(user.ProfilePicture))
@@ -171,7 +172,7 @@ namespace WPF_LoginForm.ViewModels
                     CurrentUserAccount.ProfilePicture = "Images/DefaultProfile.png"; // Path ke gambar default
                 }
 
-                CurrentUserAccount.Role = $"{user.Role}";
+                CurrentUserAccount.Role = $"{user.Role}";                
                 CurrentUserStatic = CurrentUserAccount;
             }
             else

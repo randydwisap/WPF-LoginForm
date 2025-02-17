@@ -23,26 +23,8 @@ namespace WPF_LoginForm.ViewModels
         public ICommand ShowPopupCommand { get; }
 
         public SuratMasukViewModel()
-        {
-            Items = new ObservableCollection<DataItem>
-            {
-                new DataItem { No = 1, Pengirim = "Alice", Subjek = "Subject 1", Penerima = "Bob", Keterangan = "Description 1", Status = "Sent", Tanggal = DateTime.Now, Action = "View" },
-                new DataItem { No = 2, Pengirim = "Charlie", Subjek = "Subject 2", Penerima = "David", Keterangan = "Description 2", Status = "Pending", Tanggal = DateTime.Now, Action = "Edit" },
-                // Tambahkan data lainnya di sini
-            };
+        {          
             Message = "Hello from UserControl ViewModel!";
-            ShowPopupCommand = new ViewModelCommand(ExecuteShowPopup);
         }
-
-        private void ExecuteShowPopup(object obj)
-        {
-            var popupViewModel = new PopupWindowViewModel();
-            var popupWindow = new PopupWindow
-            {
-                DataContext = popupViewModel
-            };
-            popupWindow.ShowDialog();
-        }
-
     }
 }

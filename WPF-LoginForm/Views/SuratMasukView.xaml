@@ -16,14 +16,14 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition />
         </Grid.RowDefinitions>
 
 
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="5*"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="120"/>
             </Grid.ColumnDefinitions>
 
             <StackPanel Orientation="Horizontal"
@@ -31,7 +31,7 @@
                         Grid.Column="0">
                 <fa:IconImage Icon="Search" Height="20" Width="20" Foreground="{StaticResource plainTextColor3}"/>
 
-                <TextBox Text="Search..."   
+                <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"   
                     FontSize="13"
                          Height="24"
                            Width="300"
@@ -44,92 +44,208 @@
                              BorderThickness="0,0,0,1"                             
                              VerticalContentAlignment="Center"
                              Margin="5,5,0,0"
-                         Name="txtsearch"
-                         GotFocus="txtsearch_GotFocus"></TextBox>
+                         Name="txtsearch"></TextBox>
 
             </StackPanel>
 
-            <StackPanel Grid.Column="1" Orientation="Horizontal"> <!--Button kanan-->
-                <Button     Command=""
-                            Width="120"
+            <Button Grid.Column="1"
+                            Command="{Binding LoginCommand}"                            
                             Content="Search"                            
                             FontSize="12"
                             FontFamily="Montserrat"
                             Cursor="Hand"
                             BorderThickness="0"
                             Foreground="White"
-                            VerticalAlignment="Top"
-                            Margin="0,0,10,0"
-                            Style="{StaticResource SearchButton}"/>
-                <Button Width="120"
-                    Command="{Binding ShowPopupCommand}"                   
-                    FontSize="12"
-                    FontFamily="Montserrat"
-                    Cursor="Hand"
-                    BorderThickness="0"
-                    Foreground="White"
-                    VerticalAlignment="Top"
-                    Style="{StaticResource SearchButton}">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <fa:IconImage Icon="Plus" Foreground="White" Height="15" Margin="0,0,10,0" />
-                        <TextBlock Text="Tambah"/>
-                    </StackPanel>
-                </Button>
-            </StackPanel>
+                    VerticalAlignment="Top">
+
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#773DFF"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Height="30"
+                                                    CornerRadius="15"
+                                                    Background="{TemplateBinding Background}">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                                                      HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#836EFB"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <Button Grid.Column="1"
+                            Command="{Binding ShowAddMemoCommand}"                            
+                            Content="Tambah"                            
+                            FontSize="12"
+                            FontFamily="Montserrat"
+                            Cursor="Hand"
+                            BorderThickness="0"
+                            Foreground="White"
+                    VerticalAlignment="Top">
+
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#773DFF"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Height="30"
+                                                    CornerRadius="15"
+                                                    Background="{TemplateBinding Background}">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                                                      HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#836EFB"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
         </Grid>
-        <!--Header-->
         <Border Grid.Row="1"
-                Background="#200F53"
-                CornerRadius="10" 
-                Padding="10">
+        Background="White"
+        CornerRadius="10" 
+        Padding="5">
 
-            <DataGrid ColumnWidth="*"
-                  Background="Transparent"
-                  BorderThickness="0"
-                  Foreground="Black">
+            <DataGrid ItemsSource="{Binding FilteredItems}" 
+              Background="Transparent"
+              BorderThickness="0"
+              Foreground="Black"
+              AutoGenerateColumns="False"
+              FontSize="16"
+              RowHeight="35"
+              ColumnHeaderHeight="40"
+              GridLinesVisibility="Vertical"
+              BorderBrush="Black"
+              Padding="0"
+              Margin="0"
+              HorizontalAlignment="Stretch"
+              HeadersVisibility="Column"
+              CanUserAddRows="False"
+              IsReadOnly="True">
 
+                <!-- Gaya untuk Sel -->
                 <DataGrid.CellStyle>
                     <Style TargetType="DataGridCell">
                         <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Foreground" Value="Black"/>
                         <Setter Property="Padding" Value="10,0,0,10"/>
-                        <Setter Property="BorderBrush" Value="#BCBEE0"/>
-                        <Setter Property="BorderThickness" Value="2"/>
+                        <Setter Property="BorderBrush" Value="Transparent"/>
                         <Setter Property="FontFamily" Value="Montserrat"/>
-                        <Setter Property="FontSize" Value="15"/>
+                        <Setter Property="FontSize" Value="16"/>
+
+                        <!-- Efek Hover untuk Sel -->
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="DataGridCell">
+                                    <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="0">
+                                        <ContentPresenter VerticalAlignment="Center" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#E5E5E5" />
+                            </Trigger>
+                        </Style.Triggers>
                     </Style>
                 </DataGrid.CellStyle>
+
+                <!-- Gaya untuk Baris -->
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
                         <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="BorderBrush" Value="Transparent"/>
+                        <Setter Property="FontSize" Value="16"/>
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                        <!-- Efek Hover untuk Baris -->
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#D3D3D3"/>
+                            </Trigger>
+                        </Style.Triggers>
                     </Style>
                 </DataGrid.RowStyle>
+
+                <!-- Gaya untuk Header Kolom -->
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="DataGridColumnHeader">
                         <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="Foreground" Value="#BCBEE0"/>
+                        <Setter Property="Foreground" Value="#333333"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
                         <Setter Property="Padding" Value="10,0,0,10"/>
                         <Setter Property="FontFamily" Value="Montserrat"/>
-                        <Setter Property="FontSize" Value="15"/>
+                        <Setter Property="FontSize" Value="18"/>
+                        <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                        <Setter Property="BorderBrush" Value="Black"/>
                     </Style>
                 </DataGrid.ColumnHeaderStyle>
 
+                <!-- Kolom DataGrid -->
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="No Surat" HeaderStringFormat=""/>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Jenis Surat"/>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Subjek"/>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Pengirim"/>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Penerima"/>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Keterangan"/>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Status"/>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Tanggal"/>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Action"/>
+                    <DataGridTextColumn Binding="{Binding MemoID}" Header="Nomor Surat" Width="50"/>
+                    <DataGridTextColumn Binding="{Binding NamaMemo}" Header="Tanggal Surat"  Width="250"/>
+                    <DataGridTextColumn Binding="{Binding NamaAgenda}" Header="Pengirim"  Width="275"/>
+                    <DataGridTextColumn Binding="{Binding IsiMemo}" Header="Pengirim"  Width="570"/>
+                    <DataGridTextColumn Binding="{Binding FileMemo}" Header="Keterangan"  Width="300"/>
+                    <DataGridTextColumn Binding="{Binding FileMemo}" Header="Status"  Width="300"/>
+                    <DataGridTemplateColumn Header="Action" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Button Command="{Binding DataContext.ShowEditMemoCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}"
+                                        Width="75"
+                                        Content="Edit"                            
+                                        FontSize="12"
+                                        FontFamily="Montserrat"
+                                        Cursor="Hand"
+                                        BorderThickness="0"
+                                        Foreground="White"
+                                        VerticalAlignment="Top"
+                                        Style="{StaticResource SearchButton}"
+                                        Background="DarkBlue"
+                                        Margin="0,0,10,0"/>
+                                    <Button Command="{Binding DataContext.DeleteMemoCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}"
+                                        Width="75"
+                                        Content="Hapus"                            
+                                        FontSize="12"
+                                        FontFamily="Montserrat"
+                                        Cursor="Hand"
+                                        BorderThickness="0"
+                                        Foreground="White"
+                                        VerticalAlignment="Top"
+                                        Style="{StaticResource SearchButton}"
+                                        Background="Red"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            
+
         </Border>
-        <!--Tabel-->
-        
+
     </Grid>
 </UserControl>
